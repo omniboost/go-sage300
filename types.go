@@ -93,6 +93,15 @@ type OrderLine struct {
 type Payments []Payment
 
 type Payment struct {
+	Name             string    `json:"name"`
+	TotalPrice       int       `json:"totalPrice"`
+	TransactionID    string    `json:"transactionId"`
+	TransactionError string    `json:"transactionError"`
+	Quantity         int       `json:"quantity"`
+	Units            int       `json:"units"`
+	Price            int       `json:"price"`
+	CreateDT         time.Time `json:"createDT"`
+	Key              string    `json:"key"`
 }
 
 type Center struct {
@@ -142,6 +151,22 @@ type CompressedLine struct {
 type CompressedPayments []CompressedPayment
 
 type CompressedPayment struct {
+	AddOns         []interface{} `json:"addOns"`
+	MenuParts      []interface{} `json:"menuParts"`
+	ProductName    string        `json:"productName"`
+	ProductKey     string        `json:"productKey"`
+	Quantity       float64       `json:"quantity"`
+	Units          int           `json:"units"`
+	UnitPrice      float64       `json:"unitPrice"`
+	TotalPrice     float64       `json:"totalPrice"`
+	TotalNetPrice  float64       `json:"totalNetPrice"`
+	IsExSales      bool          `json:"isExSales"`
+	Committed      bool          `json:"committed"`
+	MenuID         string        `json:"menuId"`
+	TransactionID  string        `json:"transactionId"`
+	TerminalID     string        `json:"terminalId"`
+	PromoCondition string        `json:"promoCondition"`
+	Memo           string        `json:"memo,omitempty"`
 }
 
 type Products []Product
