@@ -94,12 +94,12 @@ type Payments []Payment
 
 type Payment struct {
 	Name             string    `json:"name"`
-	TotalPrice       int       `json:"totalPrice"`
+	TotalPrice       float64   `json:"totalPrice"`
 	TransactionID    string    `json:"transactionId"`
 	TransactionError string    `json:"transactionError"`
-	Quantity         int       `json:"quantity"`
+	Quantity         float64   `json:"quantity"`
 	Units            int       `json:"units"`
-	Price            int       `json:"price"`
+	Price            float64   `json:"price"`
 	CreateDT         time.Time `json:"createDT"`
 	Key              string    `json:"key"`
 }
