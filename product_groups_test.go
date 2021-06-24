@@ -1,4 +1,4 @@
-package vismanet_test
+package trivec_test
 
 import (
 	"encoding/json"
@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestVATCategoryGetAll(t *testing.T) {
-	req := client.NewVATCategoryGetAll()
+func TestProductGroups(t *testing.T) {
+	req := client.NewProductGroupsRequest()
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)

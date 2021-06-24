@@ -1,4 +1,4 @@
-package vismanet_test
+package trivec_test
 
 import (
 	"log"
@@ -6,21 +6,21 @@ import (
 	"os"
 	"testing"
 
-	vismanet "github.com/omniboost/go-trivec"
+	trivec "github.com/omniboost/go-trivec"
 )
 
 var (
-	client *vismanet.Client
+	client *trivec.Client
 )
 
 func TestMain(m *testing.M) {
 	baseURLString := os.Getenv("BASE_URL")
-	accessToken := os.Getenv("ACCESS_TOKEN")
-	companyID := os.Getenv("COMPANY_ID")
-	applicationType := os.Getenv("APPLICATION_TYPE")
+	subscriptionKey := os.Getenv("SUBSCRIPTION_KEY")
+	serviceKey := os.Getenv("SERVICE_KEY")
+	environment := os.Getenv("ENVIRONMENT")
 	debug := os.Getenv("DEBUG")
 
-	client = vismanet.NewClient(nil, accessToken, companyID, applicationType)
+	client = trivec.NewClient(nil, subscriptionKey, serviceKey)
 	if debug != "" {
 		client.SetDebug(true)
 	}
@@ -30,6 +30,9 @@ func TestMain(m *testing.M) {
 			log.Fatal(err)
 		}
 		client.SetBaseURL(*baseURL)
+	}
+	if environment != "" {
+		client.SetEnvironment(environment)
 	}
 	m.Run()
 }

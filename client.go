@@ -1,4 +1,4 @@
-package vismanet
+package trivec
 
 import (
 	"bytes"
@@ -19,22 +19,23 @@ import (
 )
 
 const (
-	libraryVersion = "0.0.1"
-	userAgent      = "go-vismanet/" + libraryVersion
-	mediaType      = "application/json"
-	charset        = "utf-8"
+	libraryVersion     = "0.0.1"
+	userAgent          = "go-trivec/" + libraryVersion
+	mediaType          = "application/json"
+	charset            = "utf-8"
+	defaultEnvironment = "staging"
 )
 
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "integration.trivec",
-		Path:   "/API/",
+		Host:   "api.mytrivec.com",
+		Path:   "",
 	}
 )
 
 // NewClient returns a new Exact Globe Client client
-func NewClient(httpClient *http.Client, accessToken, companyID, applicationType string) *Client {
+func NewClient(httpClient *http.Client, subscriptionKey, serviceKey string) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
@@ -42,14 +43,14 @@ func NewClient(httpClient *http.Client, accessToken, companyID, applicationType 
 	client := &Client{}
 
 	client.SetHTTPClient(httpClient)
-	client.SetAccessToken(accessToken)
-	client.SetCompanyID(companyID)
-	client.SetApplicationType(applicationType)
+	client.SetSubscriptionKey(subscriptionKey)
+	client.SetServiceKey(serviceKey)
 	client.SetBaseURL(BaseURL)
 	client.SetDebug(false)
 	client.SetUserAgent(userAgent)
 	client.SetMediaType(mediaType)
 	client.SetCharset(charset)
+	client.SetEnvironment(defaultEnvironment)
 
 	return client
 }
@@ -63,9 +64,9 @@ type Client struct {
 	baseURL url.URL
 
 	// credentials
-	accessToken     string
-	companyID       string
-	applicationType string
+	subscriptionKey string
+	serviceKey      string
+	environment     string
 
 	// User agent for client
 	userAgent string
@@ -96,28 +97,28 @@ func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
 }
 
-func (c Client) AccessToken() string {
-	return c.accessToken
+func (c Client) SubscriptionKey() string {
+	return c.subscriptionKey
 }
 
-func (c *Client) SetAccessToken(accessToken string) {
-	c.accessToken = accessToken
+func (c *Client) SetSubscriptionKey(subscriptionKey string) {
+	c.subscriptionKey = subscriptionKey
 }
 
-func (c Client) CompanyID() string {
-	return c.companyID
+func (c Client) ServiceKey() string {
+	return c.serviceKey
 }
 
-func (c *Client) SetCompanyID(companyID string) {
-	c.companyID = companyID
+func (c *Client) SetServiceKey(serviceKey string) {
+	c.serviceKey = serviceKey
 }
 
-func (c Client) ApplicationType() string {
-	return c.applicationType
+func (c Client) Environment() string {
+	return c.environment
 }
 
-func (c *Client) SetApplicationType(applicationType string) {
-	c.applicationType = applicationType
+func (c *Client) SetEnvironment(environment string) {
+	c.environment = environment
 }
 
 func (c Client) BaseURL() url.URL {
@@ -225,9 +226,11 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))
 	r.Header.Add("Accept", c.MediaType())
 	r.Header.Add("User-Agent", c.UserAgent())
-	r.Header.Add("Authorization", fmt.Sprintf("Bearer %s", c.AccessToken()))
-	r.Header.Add("ipp-company-id", c.CompanyID())
-	r.Header.Add("ipp-application-type", c.ApplicationType())
+	r.Header.Add("Subscription-Key", c.SubscriptionKey())
+	r.Header.Add("ServiceKey", c.ServiceKey())
+	if c.Environment() != "" {
+		r.Header.Add("Environment", c.Environment())
+	}
 
 	return r, nil
 }

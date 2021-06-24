@@ -1,4 +1,4 @@
-package vismanet_test
+package trivec_test
 
 import (
 	"encoding/json"
@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestCurrencyGetAll(t *testing.T) {
-	req := client.NewCurrencyGetAll()
+func TestPaymodeGroups(t *testing.T) {
+	req := client.NewPaymodeGroupsRequest()
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)

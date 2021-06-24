@@ -1,4 +1,4 @@
-package vismanet
+package trivec
 
 import "time"
 

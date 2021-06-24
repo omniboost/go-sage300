@@ -1,4 +1,4 @@
-package vismanet_test
+package trivec_test
 
 import (
 	"encoding/json"
@@ -6,9 +6,8 @@ import (
 	"testing"
 )
 
-func TestCustomerInvoiceGet(t *testing.T) {
-	req := client.NewCustomerInvoiceGet()
-	req.PathParams().InvoiceNumber = "RBB202151765"
+func TestProducts(t *testing.T) {
+	req := client.NewProductsRequest()
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)

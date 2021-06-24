@@ -1,4 +1,4 @@
-package vismanet_test
+package trivec_test
 
 import (
 	"encoding/json"
@@ -6,9 +6,8 @@ import (
 	"testing"
 )
 
-func TestJournalTransactionV2GetAll(t *testing.T) {
-	req := client.NewJournalTransactionV2GetAll()
-	req.QueryParams().PeriodID = "202104"
+func TestPaymodes(t *testing.T) {
+	req := client.NewPaymodesRequest()
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)
