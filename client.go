@@ -15,6 +15,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/hashicorp/go-multierror"
 	"github.com/pkg/errors"
 )
 
@@ -289,18 +290,13 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 	}
 
 	errResp := &ErrorResponse{Response: httpResp}
-	exResp := &ExceptionResponse{Response: httpResp}
-	err = c.Unmarshal(httpResp.Body, body, errResp, exResp)
+	err = c.Unmarshal(httpResp.Body, body, errResp)
 	if err != nil {
 		return httpResp, err
 	}
 
-	if errResp.Message != "" {
+	if errResp.Error() != "" {
 		return httpResp, errResp
-	}
-
-	if exResp.ExceptionMessage != "" {
-		return httpResp, exResp
 	}
 
 	return httpResp, nil
@@ -385,37 +381,36 @@ func CheckResponse(r *http.Response) error {
 		}
 	}
 
-	if errorResponse.Message != "" {
+	if errorResponse.Error() != "" {
 		return errorResponse
 	}
 
 	return nil
 }
 
-type ExceptionResponse struct {
-	// HTTP response that caused this error
-	Response *http.Response
-
-	ExceptionType      string `json:"ExceptionType"`
-	ExceptionMessage   string `json:"ExceptionMessage"`
-	ExceptionFaultCode string `json:"ExceptionFaultCode"`
-	ExceptionMessageID string `json:"ExceptionMessageID"`
-	ExceptionDetails   string `json:"ExceptionDetails"`
-}
-
-func (r *ExceptionResponse) Error() string {
-	return r.ExceptionMessage
-}
-
 type ErrorResponse struct {
 	// HTTP response that caused this error
 	Response *http.Response
 
-	Message string `json:"Message"`
+	Errors struct {
+		Date []string `json:"date"`
+	} `json:"errors"`
+	Type    string `json:"type"`
+	Title   string `json:"title"`
+	Status  int    `json:"status"`
+	TraceID string `json:"traceId"`
 }
 
 func (r *ErrorResponse) Error() string {
-	return r.Message
+	var errs *multierror.Error
+	for _, m := range r.Errors.Date {
+		errs = multierror.Append(errs, errors.New(m))
+	}
+
+	if errs == nil {
+		return ""
+	}
+	return errs.Error()
 }
 
 func checkContentType(response *http.Response) error {
