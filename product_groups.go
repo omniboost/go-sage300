@@ -58,14 +58,10 @@ func (r ProductGroupsRequest) NewPathParams() *ProductGroupsRequestPathParams {
 	return &ProductGroupsRequestPathParams{}
 }
 
-type ProductGroupsRequestPathParams struct {
-	Date Date
-}
+type ProductGroupsRequestPathParams struct{}
 
 func (p *ProductGroupsRequestPathParams) Params() map[string]string {
-	return map[string]string{
-		"date": p.Date.Format("20060102"),
-	}
+	return map[string]string{}
 }
 
 func (r *ProductGroupsRequest) PathParams() *ProductGroupsRequestPathParams {

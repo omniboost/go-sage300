@@ -58,14 +58,10 @@ func (r PaymodesRequest) NewPathParams() *PaymodesRequestPathParams {
 	return &PaymodesRequestPathParams{}
 }
 
-type PaymodesRequestPathParams struct {
-	Date Date
-}
+type PaymodesRequestPathParams struct{}
 
 func (p *PaymodesRequestPathParams) Params() map[string]string {
-	return map[string]string{
-		"date": p.Date.Format("20060102"),
-	}
+	return map[string]string{}
 }
 
 func (r *PaymodesRequest) PathParams() *PaymodesRequestPathParams {
