@@ -28,7 +28,7 @@ const (
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "integration.visma.net",
+		Host:   "integration.trivec",
 		Path:   "/API/",
 	}
 )

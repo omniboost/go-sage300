@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	vismanet "github.com/omniboost/go-visma.net"
+	vismanet "github.com/omniboost/go-trivec"
 )
 
 var (

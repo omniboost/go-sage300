@@ -5,7 +5,7 @@ import (
 	"log"
 	"testing"
 
-	vismanet "github.com/omniboost/go-visma.net"
+	vismanet "github.com/omniboost/go-trivec"
 )
 
 func TestValueString(t *testing.T) {
