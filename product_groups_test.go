@@ -1,4 +1,4 @@
-package trivec_test
+package accountviewnet_test
 
 import (
 	"encoding/json"

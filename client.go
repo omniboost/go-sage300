@@ -1,4 +1,4 @@
-package trivec
+package accountviewnet
 
 import (
 	"bytes"
@@ -21,7 +21,7 @@ import (
 
 const (
 	libraryVersion     = "0.0.1"
-	userAgent          = "go-trivec/" + libraryVersion
+	userAgent          = "go-accountview.new/" + libraryVersion
 	mediaType          = "application/json"
 	charset            = "utf-8"
 	defaultEnvironment = "staging"

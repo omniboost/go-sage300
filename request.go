@@ -1,4 +1,4 @@
-package trivec
+package accountviewnet
 
 import "net/url"
 

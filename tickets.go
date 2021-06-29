@@ -1,10 +1,10 @@
-package trivec
+package accountviewnet
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-trivec/utils"
+	"github.com/omniboost/go-accountview.new/utils"
 )
 
 func (c *Client) NewTicketsRequest() TicketsRequest {

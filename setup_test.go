@@ -1,4 +1,4 @@
-package trivec_test
+package accountviewnet_test
 
 import (
 	"log"
@@ -6,11 +6,11 @@ import (
 	"os"
 	"testing"
 
-	trivec "github.com/omniboost/go-trivec"
+	accountviewnet "github.com/omniboost/go-accountview.new"
 )
 
 var (
-	client *trivec.Client
+	client *accountviewnet.Client
 )
 
 func TestMain(m *testing.M) {
@@ -20,7 +20,7 @@ func TestMain(m *testing.M) {
 	environment := os.Getenv("ENVIRONMENT")
 	debug := os.Getenv("DEBUG")
 
-	client = trivec.NewClient(nil, subscriptionKey, serviceKey)
+	client = accountviewnet.NewClient(nil, subscriptionKey, serviceKey)
 	if debug != "" {
 		client.SetDebug(true)
 	}

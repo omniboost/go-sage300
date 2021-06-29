@@ -1,4 +1,4 @@
-module github.com/omniboost/go-trivec
+module github.com/omniboost/go-accountview.new
 
 go 1.16
 
