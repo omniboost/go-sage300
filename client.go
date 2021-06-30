@@ -20,23 +20,22 @@ import (
 )
 
 const (
-	libraryVersion     = "0.0.1"
-	userAgent          = "go-accountview.new/" + libraryVersion
-	mediaType          = "application/json"
-	charset            = "utf-8"
-	defaultEnvironment = "staging"
+	libraryVersion = "0.0.1"
+	userAgent      = "go-accountview.net/" + libraryVersion
+	mediaType      = "application/json"
+	charset        = "utf-8"
 )
 
 var (
 	BaseURL = url.URL{
 		Scheme: "https",
-		Host:   "api.mytrivec.com",
-		Path:   "",
+		Host:   "www.accountview.net",
+		Path:   "/api/v3",
 	}
 )
 
 // NewClient returns a new Exact Globe Client client
-func NewClient(httpClient *http.Client, subscriptionKey, serviceKey string) *Client {
+func NewClient(httpClient *http.Client, companyID string) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
@@ -44,14 +43,12 @@ func NewClient(httpClient *http.Client, subscriptionKey, serviceKey string) *Cli
 	client := &Client{}
 
 	client.SetHTTPClient(httpClient)
-	client.SetSubscriptionKey(subscriptionKey)
-	client.SetServiceKey(serviceKey)
+	client.SetCompanyID(companyID)
 	client.SetBaseURL(BaseURL)
 	client.SetDebug(false)
 	client.SetUserAgent(userAgent)
 	client.SetMediaType(mediaType)
 	client.SetCharset(charset)
-	client.SetEnvironment(defaultEnvironment)
 
 	return client
 }
@@ -65,9 +62,7 @@ type Client struct {
 	baseURL url.URL
 
 	// credentials
-	subscriptionKey string
-	serviceKey      string
-	environment     string
+	companyID string
 
 	// User agent for client
 	userAgent string
@@ -98,28 +93,12 @@ func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
 }
 
-func (c Client) SubscriptionKey() string {
-	return c.subscriptionKey
+func (c Client) CompanyID() string {
+	return c.companyID
 }
 
-func (c *Client) SetSubscriptionKey(subscriptionKey string) {
-	c.subscriptionKey = subscriptionKey
-}
-
-func (c Client) ServiceKey() string {
-	return c.serviceKey
-}
-
-func (c *Client) SetServiceKey(serviceKey string) {
-	c.serviceKey = serviceKey
-}
-
-func (c Client) Environment() string {
-	return c.environment
-}
-
-func (c *Client) SetEnvironment(environment string) {
-	c.environment = environment
+func (c *Client) SetCompanyID(companyID string) {
+	c.companyID = companyID
 }
 
 func (c Client) BaseURL() url.URL {
@@ -227,11 +206,7 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))
 	r.Header.Add("Accept", c.MediaType())
 	r.Header.Add("User-Agent", c.UserAgent())
-	r.Header.Add("Subscription-Key", c.SubscriptionKey())
-	r.Header.Add("ServiceKey", c.ServiceKey())
-	if c.Environment() != "" {
-		r.Header.Add("Environment", c.Environment())
-	}
+	r.Header.Add("X-Company", c.CompanyID())
 
 	return r, nil
 }
