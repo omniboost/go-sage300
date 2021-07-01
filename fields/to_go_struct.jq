@@ -19,6 +19,8 @@ def field_type:
         "int"
     elif . == "Y" then
         "float64"
+    elif . == "B" then
+        "float64"
     elif . == "M" then
         "string"
     elif . == "D" then
