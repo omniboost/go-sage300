@@ -14,7 +14,9 @@ func TestSystemDataGet(t *testing.T) {
 	req.QueryParams().PageSize = 256
 	req.QueryParams().FilterControlSource1 = "DBF_NAME"
 	req.QueryParams().FilterOperator1 = "Contains"
-	req.QueryParams().FilterValue1 = "VAT     "
+	// req.QueryParams().FilterValue1 = "VAT     "
+	// req.QueryParams().FilterValue1 = "LEDGER  "
+	req.QueryParams().FilterValue1 = "COMP_HDR"
 	req.QueryParams().FilterValueType1 = "C"
 	// req.QueryParams().SortFields = "FLD_DESC"
 	// req.QueryParams().SortOrder = "Ascending"

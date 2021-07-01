@@ -106,9 +106,7 @@ func (r *AccountviewDataGetRequest) NewResponseBody() *AccountviewDataGetRespons
 	return &AccountviewDataGetResponseBody{}
 }
 
-type AccountviewDataGetResponseBody struct {
-	VAT []VAT `json:"VAT"`
-}
+type AccountviewDataGetResponseBody struct{}
 
 func (r *AccountviewDataGetRequest) URL() *url.URL {
 	u := r.client.GetEndpointURL("accountviewdata", r.PathParams())

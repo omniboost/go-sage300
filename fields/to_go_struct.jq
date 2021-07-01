@@ -18,9 +18,11 @@ def field_type:
     elif . == "I" then
         "int"
     elif . == "Y" then
-        "int"
+        "float64"
     elif . == "M" then
         "string"
+    elif . == "D" then
+        "Date"
     else
         error("Unknown field type \(.)")
     end
@@ -32,7 +34,7 @@ def field_type:
 # 	Code        string `json:"Code"`
 # }
 
-(first | .DBF_NAME) as $struct_name
+(first | .DBF_NAME | to_camel_case) as $struct_name
 | (
     ["type \($struct_name) struct {"]
     +
@@ -44,5 +46,5 @@ def field_type:
         | "\($name) \($type) `json:\"\($json_name)\"` // \($comment)"
     )
     +
-    ["}"]
+    ["", "ExtKey int `json:\"EXT_KEY\"`", "}"]
 ) | .[]
