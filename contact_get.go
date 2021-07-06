@@ -6,7 +6,7 @@ func (c *Client) NewContactGetRequest() ContactGetRequest {
 	r := ContactGetRequest{
 		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "VA1"
+	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "CON"
 	return r
 }
 

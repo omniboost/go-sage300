@@ -15,7 +15,6 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/hashicorp/go-multierror"
 	"github.com/pkg/errors"
 )
 
@@ -363,29 +362,23 @@ func CheckResponse(r *http.Response) error {
 	return nil
 }
 
+// {
+//   "ErrorType": "AccountViewError",
+//   "ErrorNumbers": null,
+//   "ErrorMessage": ""
+// }
+
 type ErrorResponse struct {
 	// HTTP response that caused this error
 	Response *http.Response
 
-	Errors struct {
-		Date []string `json:"date"`
-	} `json:"errors"`
-	Type    string `json:"type"`
-	Title   string `json:"title"`
-	Status  int    `json:"status"`
-	TraceID string `json:"traceId"`
+	Type    string      `json:"ErrorType"`
+	Numbers interface{} `json:"ErrorNumbers"`
+	Message string      `json:"ErrorMessage"`
 }
 
 func (r *ErrorResponse) Error() string {
-	var errs *multierror.Error
-	for _, m := range r.Errors.Date {
-		errs = multierror.Append(errs, errors.New(m))
-	}
-
-	if errs == nil {
-		return ""
-	}
-	return errs.Error()
+	return fmt.Sprintf("%s: %s", r.Type, r.Message)
 }
 
 func checkContentType(response *http.Response) error {
@@ -396,4 +389,42 @@ func checkContentType(response *http.Response) error {
 	}
 
 	return nil
+}
+
+type BusinessObjectInterface interface {
+	BusinessObject() string
+	Table() string
+	Fields() []string
+	Values() ([]interface{}, error)
+}
+
+func BusinessObjectToAccountviewDataPostRequest(client *Client, object BusinessObjectInterface) (AccountviewDataPostRequest, error) {
+	req := client.NewAccountviewDataPostRequest()
+	body := req.RequestBody()
+
+	body.BusinessObject = object.BusinessObject()
+	body.Table.Definition.Name = object.Table()
+
+	ff := object.Fields()
+	// one extra for RowId
+	fields := make(TableDefinitionFields, len(ff)+1)
+	fields[0] = TableDefinitionField{
+		Name:      "RowId",
+		FieldType: "C",
+	}
+	for i, f := range ff {
+		fields[i+1] = TableDefinitionField{
+			Name:      f,
+			FieldType: "C",
+		}
+	}
+	body.Table.Definition.Fields = fields
+
+	values, err := object.Values()
+	if err != nil {
+		return req, errors.WithStack(err)
+	}
+	body.TableData.Data.Rows = Rows{{values}}
+
+	return req, nil
 }
