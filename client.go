@@ -427,7 +427,8 @@ func BusinessObjectToAccountviewDataPostRequest(client *Client, object BusinessO
 		body.TableData.DetailData = make(DetailData, 1)
 		for _, c := range children {
 			rowID := strconv.Itoa(len(body.TableData.DetailData[0].Rows) + 1)
-			data, err := BusinessObjectToDetailData(c, rowID)
+			headerID := "1"
+			data, err := BusinessObjectToDetailData(c, rowID, headerID)
 			if err != nil {
 				return req, errors.WithStack(err)
 			}
@@ -500,7 +501,7 @@ func BusinessObjectToDetailDefinition(object BusinessObjectInterface) (TableDeta
 	return definition, nil
 }
 
-func BusinessObjectToDetailData(object BusinessObjectInterface, rowID string) (DetailData, error) {
+func BusinessObjectToDetailData(object BusinessObjectInterface, rowID, headerID string) (DetailData, error) {
 	dd := DetailData{
 		DetailDataEntry{
 			Rows: Rows{},
@@ -513,7 +514,7 @@ func BusinessObjectToDetailData(object BusinessObjectInterface, rowID string) (D
 	}
 
 	// add RowId & HeaderId value
-	values = append(values, []interface{}{rowID, "1"}...)
+	values = append(values, []interface{}{rowID, headerID}...)
 
 	dd[0].Rows = Rows{{values}}
 	return dd, nil
