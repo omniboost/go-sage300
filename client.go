@@ -12,9 +12,12 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"path"
+	"reflect"
+	"strconv"
 	"strings"
 	"text/template"
 
+	"github.com/fatih/structtag"
 	"github.com/pkg/errors"
 )
 
@@ -403,47 +406,57 @@ func BusinessObjectToAccountviewDataPostRequest(client *Client, object BusinessO
 	req := client.NewAccountviewDataPostRequest()
 	body := req.RequestBody()
 
+	body.BookDate = "2021-07-02T10:39:05.276Z"
 	body.BusinessObject = object.BusinessObject()
-	body.Table.Definition = BusinessObjectToTableDefinition(object)
+	body.Table.Definition, err = BusinessObjectToTableDefinition(object)
+	if err != nil {
+		return req, errors.WithStack(err)
+	}
 	body.TableData.Data, err = BusinessObjectToTableDataData(object)
 	if err != nil {
 		return req, errors.WithStack(err)
 	}
 
 	if len(children) > 0 {
-		body.Table.DetailDefinitions = append(body.Table.DetailDefinitions, BusinessObjectToDetailDefinition(children[0]))
+		detailDefinition, err := BusinessObjectToDetailDefinition(children[0])
+		if err != nil {
+			return req, errors.WithStack(err)
+		}
+		body.Table.DetailDefinitions = append(body.Table.DetailDefinitions, detailDefinition)
 
+		body.TableData.DetailData = make(DetailData, 1)
 		for _, c := range children {
-			data, err := BusinessObjectToDetailData(c)
+			rowID := strconv.Itoa(len(body.TableData.DetailData[0].Rows) + 1)
+			data, err := BusinessObjectToDetailData(c, rowID)
 			if err != nil {
 				return req, errors.WithStack(err)
 			}
-			body.TableData.DetailData = append(body.TableData.DetailData, data...)
+
+			body.TableData.DetailData[0].Rows = append(body.TableData.DetailData[0].Rows, data[0].Rows...)
 		}
 	}
 
 	return req, nil
 }
 
-func BusinessObjectToTableDefinition(object BusinessObjectInterface) TableDefinition {
+func BusinessObjectToTableDefinition(object BusinessObjectInterface) (TableDefinition, error) {
 	definition := TableDefinition{}
 	definition.Name = object.Table()
 
 	ff := object.Fields()
-	// one extra for RowId
-	fields := make(TableDefinitionFields, len(ff)+1)
-	fields[0] = TableDefinitionField{
+	dff, err := FieldsToDefinitionFields(object, ff)
+	if err != nil {
+		return definition, err
+	}
+
+	// add RowId table definition
+	dff = append(dff, TableDefinitionField{
 		Name:      "RowId",
 		FieldType: "C",
-	}
-	for i, f := range ff {
-		fields[i+1] = TableDefinitionField{
-			Name:      f,
-			FieldType: "C",
-		}
-	}
-	definition.Fields = fields
-	return definition
+	})
+
+	definition.Fields = dff
+	return definition, nil
 }
 
 func BusinessObjectToTableDataData(object BusinessObjectInterface) (TableDataData, error) {
@@ -455,38 +468,39 @@ func BusinessObjectToTableDataData(object BusinessObjectInterface) (TableDataDat
 	}
 
 	// add RowId value
-	values = append([]interface{}{0}, values...)
+	values = append(values, []interface{}{"1"}...)
 
 	tdd.Rows = Rows{{values}}
 	return tdd, nil
 }
 
-func BusinessObjectToDetailDefinition(object BusinessObjectInterface) TableDetailDefinition {
+func BusinessObjectToDetailDefinition(object BusinessObjectInterface) (TableDetailDefinition, error) {
 	definition := TableDetailDefinition{}
 	definition.Name = object.Table()
 
 	ff := object.Fields()
-	// one extra for RowId
-	fields := make(TableDefinitionFields, len(ff)+2)
-	fields[0] = TableDefinitionField{
+	dff, err := FieldsToDefinitionFields(object, ff)
+	if err != nil {
+		return definition, err
+	}
+
+	// add RowId table definition
+	dff = append(dff, TableDefinitionField{
 		Name:      "RowId",
 		FieldType: "C",
-	}
-	fields[1] = TableDefinitionField{
+	})
+
+	// add HeaderId table definition
+	dff = append(dff, TableDefinitionField{
 		Name:      "HeaderId",
 		FieldType: "C",
-	}
-	for i, f := range ff {
-		fields[i+2] = TableDefinitionField{
-			Name:      f,
-			FieldType: "C",
-		}
-	}
-	definition.Fields = fields
-	return definition
+	})
+
+	definition.Fields = dff
+	return definition, nil
 }
 
-func BusinessObjectToDetailData(object BusinessObjectInterface) (DetailData, error) {
+func BusinessObjectToDetailData(object BusinessObjectInterface, rowID string) (DetailData, error) {
 	dd := DetailData{
 		DetailDataEntry{
 			Rows: Rows{},
@@ -498,11 +512,62 @@ func BusinessObjectToDetailData(object BusinessObjectInterface) (DetailData, err
 		return dd, errors.WithStack(err)
 	}
 
-	// add RowId value
-	values = append([]interface{}{"1"}, values...)
-	// add HeaderId value
-	values = append([]interface{}{"1"}, values...)
+	// add RowId & HeaderId value
+	values = append(values, []interface{}{rowID, "1"}...)
 
 	dd[0].Rows = Rows{{values}}
 	return dd, nil
+}
+
+func FieldsToDefinitionFields(object BusinessObjectInterface, fields []string) (TableDefinitionFields, error) {
+	tdf := make(TableDefinitionFields, len(fields))
+
+	for i, f := range fields {
+		field, ok := reflect.TypeOf(object).FieldByName(f)
+		if !ok {
+			return tdf, errors.Errorf("%s is not an existing field", f)
+		}
+
+		tags, err := structtag.Parse(string(field.Tag))
+		if err != nil {
+			return tdf, err
+		}
+
+		jsonTag, err := tags.Get("json")
+		if err != nil {
+			return tdf, err
+		}
+
+		// fieldTypeTag, err := tags.Get("field_type")
+		// if err != nil {
+		// 	return tdf, err
+		// }
+
+		value := reflect.ValueOf(object).FieldByName(f).Interface()
+		fieldType := ""
+		switch t := value.(type) {
+		case int:
+			fieldType = "I"
+		case string:
+			fieldType = "C"
+		case float64:
+			fieldType = "N"
+		default:
+			return tdf, errors.Errorf("Don't know how to map type %s", t)
+		}
+
+		tdf[i] = TableDefinitionField{Name: jsonTag.Name, FieldType: fieldType}
+	}
+
+	return tdf, nil
+}
+
+func FieldsToValues(object BusinessObjectInterface, fields []string) ([]interface{}, error) {
+	values := make([]interface{}, len(fields))
+
+	for i, f := range fields {
+		values[i] = reflect.ValueOf(object).FieldByName(f).Interface()
+	}
+
+	return values, nil
 }

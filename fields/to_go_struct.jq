@@ -45,7 +45,7 @@ def field_type:
         | (.FIELD_TYPE |field_type) as $type
         | (.FIELD_NAME) as $json_name
         | (.FLD_DESC) as $comment
-        | "\($name) \($type) `json:\"\($json_name)\"` // \($comment)"
+        | "\($name) \($type) `json:\"\($json_name)\" field_type:\"\(.FIELD_TYPE)\"` // \($comment)"
     )
     +
     ["", "ExtKey int `json:\"EXT_KEY\"`", "}"]

@@ -16,12 +16,19 @@ func TestDjPageTypeTest(t *testing.T) {
 	lines := []accountviewnet.DjLine{
 		{
 			AcctNr: "9999",
-			Amount: 1.0,
+			Amount: 12.1,
+			RecID:  "REC_ID",
+		},
+		{
+			AcctNr: "9999",
+			Amount: -12.1,
+			RecID:  "REC_ID",
 		},
 	}
 	req, err := o.ToAccountviewDataPostRequest(client, lines)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	resp, err := req.Do()
