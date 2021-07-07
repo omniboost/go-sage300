@@ -22,6 +22,7 @@ func TestSystemDataGet(t *testing.T) {
 	// req.QueryParams().FilterValue1 = "ACCT_REC"
 	// req.QueryParams().FilterValue1 = "COST"
 	req.QueryParams().FilterValue1 = "DJ_LINE"
+	// req.QueryParams().FilterValue1 = "ADM_LIST"
 	req.QueryParams().FilterValueType1 = "C"
 	// req.QueryParams().SortFields = "FLD_DESC"
 	// req.QueryParams().SortOrder = "Ascending"

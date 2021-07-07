@@ -11,7 +11,7 @@ import (
 func TestAccountviewDataPost(t *testing.T) {
 	req := client.NewAccountviewDataPostRequest()
 	req.SetRequestBody(accountviewnet.AccountviewDataPostRequestBody{
-		BookDate:       "2021-7-2T10:39:05.276Z",
+		BookDate:       "2021-07-02T10:39:05.276Z",
 		BusinessObject: "DJ2",
 		Table: accountviewnet.Table{
 			Definition: accountviewnet.TableDefinition{
@@ -50,10 +50,6 @@ func TestAccountviewDataPost(t *testing.T) {
 						{
 							Name:      "PAGE_NR",
 							FieldType: "C",
-						},
-						{
-							Name:      "SRC_TYPE",
-							FieldType: "N",
 						},
 						{
 							Name:      "DJ_CODE",
@@ -100,11 +96,10 @@ func TestAccountviewDataPost(t *testing.T) {
 								"1",
 								"1",
 								"TEST",
-								"1337",
 								"TEST",
 								"TEST",
-								"2016-11-30T13:37:37.450Z",
-								"TEST",
+								"2021-11-30T13:37:37.450Z",
+								"3811",
 								"TEST",
 							},
 						},

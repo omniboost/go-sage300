@@ -117,8 +117,7 @@ func (djPage DjPage) Fields() []string {
 
 func (djPage DjPage) Values() ([]interface{}, error) {
 	fields := djPage.Fields()
-	// one extra for RowId
-	values := make([]interface{}, len(fields)+1)
+	values := make([]interface{}, len(fields))
 	b, err := json.Marshal(djPage)
 	if err != nil {
 		return values, errors.WithStack(err)
@@ -130,15 +129,17 @@ func (djPage DjPage) Values() ([]interface{}, error) {
 		return values, errors.WithStack(err)
 	}
 
-	// RowId
-	values[0] = 0
 	for i, f := range fields {
-		values[i+1] = m[f]
+		values[i] = m[f]
 	}
 
 	return values, nil
 }
 
-func (djPage DjPage) ToAccountviewDataPostRequest(client *Client) (AccountviewDataPostRequest, error) {
-	return BusinessObjectToAccountviewDataPostRequest(client, djPage)
+func (djPage DjPage) ToAccountviewDataPostRequest(client *Client, lines []DjLine) (AccountviewDataPostRequest, error) {
+	children := make([]BusinessObjectInterface, len(lines))
+	for i, v := range lines {
+		children[i] = BusinessObjectInterface(v)
+	}
+	return BusinessObjectToAccountviewDataPostRequest(client, djPage, children)
 }
