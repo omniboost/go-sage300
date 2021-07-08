@@ -19,7 +19,8 @@ func (r *AcctRecGetRequest) NewResponseBody() *AcctRecGetResponseBody {
 }
 
 type AcctRecGetResponseBody struct {
-	AcctRec []AcctRec `json:"ACCTREC"`
+	AcctRec []AcctRec     `json:"CONTACT"`
+	UsrLink []interface{} `json:"USR_LINK"`
 }
 
 func (r *AcctRecGetRequest) Do() (AcctRecGetResponseBody, error) {

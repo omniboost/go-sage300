@@ -1,6 +1,7 @@
 package accountviewnet
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
 
@@ -107,7 +108,9 @@ func (r *AccountviewDataPostRequest) NewResponseBody() *AccountviewDataPostRespo
 	return &AccountviewDataPostResponseBody{}
 }
 
-type AccountviewDataPostResponseBody struct{}
+type AccountviewDataPostResponseBody struct {
+	json.RawMessage
+}
 
 func (r *AccountviewDataPostRequest) URL() *url.URL {
 	u := r.client.GetEndpointURL("accountviewdata", r.PathParams())

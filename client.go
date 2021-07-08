@@ -381,6 +381,10 @@ type ErrorResponse struct {
 }
 
 func (r *ErrorResponse) Error() string {
+	if r.Type == "" && r.Message == "" {
+		return ""
+	}
+
 	return fmt.Sprintf("%s: %s", r.Type, r.Message)
 }
 
@@ -553,6 +557,8 @@ func FieldsToDefinitionFields(object BusinessObjectInterface, fields []string) (
 			fieldType = "C"
 		case float64:
 			fieldType = "N"
+		case Date:
+			fieldType = "T"
 		default:
 			return tdf, errors.Errorf("Don't know how to map type %s", t)
 		}

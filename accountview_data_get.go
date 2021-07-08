@@ -36,18 +36,22 @@ func (r AccountviewDataGetRequest) NewQueryParams() *AccountviewDataGetRequestQu
 type AccountviewDataGetRequestQueryParams struct {
 	BusinessObject string `schema:"BusinessObject"`
 	PageSize       int    `schema:"PageSize"`
+	Fields         string `schema:"Fields,omitempty"`
 
 	FilterControlSource1  string `schema:"FilterControlSource1,omitempty"`
 	FilterOperator1       string `schema:"FilterOperator1,omitempty"`
 	FilterValueType1      string `schema:"FilterValueType1,omitempty"`
 	FilterValue1          string `schema:"FilterValue1,omitempty"`
-	FilterIsListOfValues1 bool   `schema:"FilterIsListOfValues1,omitempty"`
+	FilterIsListOfValues1 bool   `schema:"FilterIsListOfValues1"`
 
 	FilterControlSource2  string `schema:"FilterControlSource2,omitempty"`
 	FilterOperator2       string `schema:"FilterOperator2,omitempty"`
 	FilterValueType2      string `schema:"FilterValueType2,omitempty"`
 	FilterValue2          string `schema:"FilterValue2,omitempty"`
 	FilterIsListOfValues2 bool   `schema:"FilterIsListOfValues2,omitempty"`
+
+	SortFields string `schema:"SortFields,omitempty"`
+	SortOrder  string `schema:"SortOrder,omitempty"`
 }
 
 func (p AccountviewDataGetRequestQueryParams) ToURLValues() (url.Values, error) {
