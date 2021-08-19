@@ -1,8 +1,7 @@
 package netsuite_test
 
 import (
-	"log"
-	"net/url"
+	"context"
 	"os"
 	"testing"
 
@@ -15,31 +14,17 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	var err error
-
-	baseURLString := os.Getenv("BASE_URL")
+	baseURL := os.Getenv("BASE_URL")
 	clientID := os.Getenv("CLIENT_ID")
 	clientSecret := os.Getenv("CLIENT_SECRET")
 	refreshToken := os.Getenv("REFRESH_TOKEN")
 	tokenURL := os.Getenv("TOKEN_URL")
 	companyID := os.Getenv("COMPANY_ID")
 	debug := os.Getenv("DEBUG")
-	var baseURL *url.URL
 
-	if baseURLString != "" {
-		baseURL, err = url.Parse(baseURLString)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	oauthConfig := netsuite.NewOauth2Config()
+	oauthConfig := netsuite.NewOauth2Config(companyID)
 	oauthConfig.ClientID = clientID
 	oauthConfig.ClientSecret = clientSecret
-
-	if baseURL != nil {
-		oauthConfig.SetBaseURL(baseURL)
-	}
 
 	// set alternative token url
 	if tokenURL != "" {
@@ -54,15 +39,15 @@ func TestMain(m *testing.M) {
 	}
 
 	// get http client with automatic oauth logic
-	httpClient := oauthConfig.Client(oauth2.NoContext, token)
+	httpClient := oauthConfig.Client(context.Background(), token)
 
 	client = netsuite.NewClient(httpClient, companyID)
 	if debug != "" {
 		client.SetDebug(true)
 	}
 
-	if baseURL != nil {
-		client.SetBaseURL(*baseURL)
+	if baseURL != "" {
+		client.SetBaseURL(baseURL)
 	}
 
 	client.SetDisallowUnknownFields(true)

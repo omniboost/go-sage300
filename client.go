@@ -12,12 +12,9 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"path"
-	"reflect"
-	"strconv"
 	"strings"
 	"text/template"
 
-	"github.com/fatih/structtag"
 	"github.com/pkg/errors"
 )
 
@@ -29,11 +26,7 @@ const (
 )
 
 var (
-	BaseURL = url.URL{
-		Scheme: "https",
-		Host:   "www.netsuite",
-		Path:   "/api/v3",
-	}
+	BaseURL string = "https://{{.account_id}}.suitetalk.api.netsuite.com/services/rest/record/v1"
 )
 
 // NewClient returns a new Exact Globe Client client
@@ -61,7 +54,7 @@ type Client struct {
 	http *http.Client
 
 	debug   bool
-	baseURL url.URL
+	baseURL string
 
 	// credentials
 	companyID string
@@ -103,11 +96,20 @@ func (c *Client) SetCompanyID(companyID string) {
 	c.companyID = companyID
 }
 
-func (c Client) BaseURL() url.URL {
-	return c.baseURL
+func (c Client) BaseURL() (*url.URL, error) {
+	tmpl, err := template.New("host").Parse(c.baseURL)
+	if err != nil {
+		return &url.URL{}, err
+	}
+	buf := new(bytes.Buffer)
+	err = tmpl.Execute(buf, map[string]interface{}{"account_id": c.companyID})
+	if err != nil {
+		return &url.URL{}, err
+	}
+	return url.Parse(buf.String())
 }
 
-func (c *Client) SetBaseURL(baseURL url.URL) {
+func (c *Client) SetBaseURL(baseURL string) {
 	c.baseURL = baseURL
 }
 
@@ -143,8 +145,11 @@ func (c *Client) SetBeforeRequestDo(fun BeforeRequestDoCallback) {
 	c.beforeRequestDo = fun
 }
 
-func (c *Client) GetEndpointURL(p string, pathParams PathParams) url.URL {
-	clientURL := c.BaseURL()
+func (c *Client) GetEndpointURL(p string, pathParams PathParams) (url.URL, error) {
+	clientURL, err := c.BaseURL()
+	if err != nil {
+		return url.URL{}, err
+	}
 
 	parsed, err := url.Parse(p)
 	if err != nil {
@@ -170,11 +175,11 @@ func (c *Client) GetEndpointURL(p string, pathParams PathParams) url.URL {
 	// params["administration_id"] = c.Administration()
 	err = tmpl.Execute(buf, params)
 	if err != nil {
-		log.Fatal(err)
+		return url.URL{}, err
 	}
 
 	clientURL.Path = buf.String()
-	return clientURL
+	return *clientURL, nil
 }
 
 func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, error) {
@@ -188,7 +193,12 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	}
 
 	// create new http request
-	r, err := http.NewRequest(req.Method(), req.URL().String(), buf)
+	u, err := req.URL()
+	if err != nil {
+		return nil, err
+	}
+
+	r, err := http.NewRequest(req.Method(), u.String(), buf)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +218,6 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))
 	r.Header.Add("Accept", c.MediaType())
 	r.Header.Add("User-Agent", c.UserAgent())
-	r.Header.Add("X-Company", c.CompanyID())
 
 	return r, nil
 }
@@ -391,190 +400,9 @@ func (r *ErrorResponse) Error() string {
 func checkContentType(response *http.Response) error {
 	header := response.Header.Get("Content-Type")
 	contentType := strings.Split(header, ";")[0]
-	if contentType != mediaType {
+	if contentType != "application/vnd.oracle.resource+json" {
 		return fmt.Errorf("Expected Content-Type \"%s\", got \"%s\"", mediaType, contentType)
 	}
 
 	return nil
-}
-
-type BusinessObjectInterface interface {
-	BusinessObject() string
-	Table() string
-	Fields() []string
-	Values() ([]interface{}, error)
-}
-
-func BusinessObjectToNetsuiteDataPostRequest(client *Client, object BusinessObjectInterface, children []BusinessObjectInterface) (NetsuiteDataPostRequest, error) {
-	var err error
-	req := client.NewNetsuiteDataPostRequest()
-	body := req.RequestBody()
-
-	body.BookDate = "2021-07-02T10:39:05.276Z"
-	body.BusinessObject = object.BusinessObject()
-	body.Table.Definition, err = BusinessObjectToTableDefinition(object)
-	if err != nil {
-		return req, errors.WithStack(err)
-	}
-	body.TableData.Data, err = BusinessObjectToTableDataData(object)
-	if err != nil {
-		return req, errors.WithStack(err)
-	}
-
-	if len(children) > 0 {
-		detailDefinition, err := BusinessObjectToDetailDefinition(children[0])
-		if err != nil {
-			return req, errors.WithStack(err)
-		}
-		body.Table.DetailDefinitions = append(body.Table.DetailDefinitions, detailDefinition)
-
-		body.TableData.DetailData = make(DetailData, 1)
-		for _, c := range children {
-			rowID := strconv.Itoa(len(body.TableData.DetailData[0].Rows) + 1)
-			headerID := "1"
-			data, err := BusinessObjectToDetailData(c, rowID, headerID)
-			if err != nil {
-				return req, errors.WithStack(err)
-			}
-
-			body.TableData.DetailData[0].Rows = append(body.TableData.DetailData[0].Rows, data[0].Rows...)
-		}
-	}
-
-	return req, nil
-}
-
-func BusinessObjectToTableDefinition(object BusinessObjectInterface) (TableDefinition, error) {
-	definition := TableDefinition{}
-	definition.Name = object.Table()
-
-	ff := object.Fields()
-	dff, err := FieldsToDefinitionFields(object, ff)
-	if err != nil {
-		return definition, err
-	}
-
-	// add RowId table definition
-	dff = append(dff, TableDefinitionField{
-		Name:      "RowId",
-		FieldType: "C",
-	})
-
-	definition.Fields = dff
-	return definition, nil
-}
-
-func BusinessObjectToTableDataData(object BusinessObjectInterface) (TableDataData, error) {
-	tdd := TableDataData{}
-
-	values, err := object.Values()
-	if err != nil {
-		return tdd, errors.WithStack(err)
-	}
-
-	// add RowId value
-	values = append(values, []interface{}{"1"}...)
-
-	tdd.Rows = Rows{{values}}
-	return tdd, nil
-}
-
-func BusinessObjectToDetailDefinition(object BusinessObjectInterface) (TableDetailDefinition, error) {
-	definition := TableDetailDefinition{}
-	definition.Name = object.Table()
-
-	ff := object.Fields()
-	dff, err := FieldsToDefinitionFields(object, ff)
-	if err != nil {
-		return definition, err
-	}
-
-	// add RowId table definition
-	dff = append(dff, TableDefinitionField{
-		Name:      "RowId",
-		FieldType: "C",
-	})
-
-	// add HeaderId table definition
-	dff = append(dff, TableDefinitionField{
-		Name:      "HeaderId",
-		FieldType: "C",
-	})
-
-	definition.Fields = dff
-	return definition, nil
-}
-
-func BusinessObjectToDetailData(object BusinessObjectInterface, rowID, headerID string) (DetailData, error) {
-	dd := DetailData{
-		DetailDataEntry{
-			Rows: Rows{},
-		},
-	}
-
-	values, err := object.Values()
-	if err != nil {
-		return dd, errors.WithStack(err)
-	}
-
-	// add RowId & HeaderId value
-	values = append(values, []interface{}{rowID, headerID}...)
-
-	dd[0].Rows = Rows{{values}}
-	return dd, nil
-}
-
-func FieldsToDefinitionFields(object BusinessObjectInterface, fields []string) (TableDefinitionFields, error) {
-	tdf := make(TableDefinitionFields, len(fields))
-
-	for i, f := range fields {
-		field, ok := reflect.TypeOf(object).FieldByName(f)
-		if !ok {
-			return tdf, errors.Errorf("%s is not an existing field", f)
-		}
-
-		tags, err := structtag.Parse(string(field.Tag))
-		if err != nil {
-			return tdf, err
-		}
-
-		jsonTag, err := tags.Get("json")
-		if err != nil {
-			return tdf, err
-		}
-
-		// fieldTypeTag, err := tags.Get("field_type")
-		// if err != nil {
-		// 	return tdf, err
-		// }
-
-		value := reflect.ValueOf(object).FieldByName(f).Interface()
-		fieldType := ""
-		switch t := value.(type) {
-		case int:
-			fieldType = "I"
-		case string:
-			fieldType = "C"
-		case float64:
-			fieldType = "N"
-		case Date:
-			fieldType = "T"
-		default:
-			return tdf, errors.Errorf("Don't know how to map type %s", t)
-		}
-
-		tdf[i] = TableDefinitionField{Name: jsonTag.Name, FieldType: fieldType}
-	}
-
-	return tdf, nil
-}
-
-func FieldsToValues(object BusinessObjectInterface, fields []string) ([]interface{}, error) {
-	values := make([]interface{}, len(fields))
-
-	for i, f := range fields {
-		values[i] = reflect.ValueOf(object).FieldByName(f).Interface()
-	}
-
-	return values, nil
 }

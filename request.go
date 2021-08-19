@@ -7,7 +7,7 @@ type Request interface {
 	// QueryParams() QueryParams
 	PathParamsInterface() PathParams
 	RequestBodyInterface() interface{}
-	URL() *url.URL
+	URL() (*url.URL, error)
 }
 
 type QueryParams interface {
