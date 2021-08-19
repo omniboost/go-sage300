@@ -375,26 +375,52 @@ func CheckResponse(r *http.Response) error {
 }
 
 // {
-//   "ErrorType": "NetsuiteError",
-//   "ErrorNumbers": null,
-//   "ErrorMessage": ""
+//   "type": "https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4",
+//   "title": "Forbidden",
+//   "status": 403,
+//   "o:errorDetails": [
+//     {
+//       "detail": "The account record is only available as a beta record. Enable the REST Record Service (Beta) feature in Setup > Company > Enable Features to work with this record.",
+//       "o:errorCode": "INSUFFICIENT_PERMISSION"
+//     }
+//   ]
 // }
 
 type ErrorResponse struct {
 	// HTTP response that caused this error
 	Response *http.Response
 
-	Type    string      `json:"ErrorType"`
-	Numbers interface{} `json:"ErrorNumbers"`
-	Message string      `json:"ErrorMessage"`
+	Type         string       `json:"type"`
+	Title        interface{}  `json:"title"`
+	Status       int          `json:"status"`
+	ErrorDetails ErrorDetails `json:"o:errorDetails"`
 }
 
 func (r *ErrorResponse) Error() string {
-	if r.Type == "" && r.Message == "" {
-		return ""
+	errors := []string{}
+
+	for _, d := range r.ErrorDetails {
+		err := d.Error()
+		if err != "" {
+			errors = append(errors, err)
+		}
 	}
 
-	return fmt.Sprintf("%s: %s", r.Type, r.Message)
+	return strings.Join(errors, "\r\n")
+}
+
+type ErrorDetails []ErrorDetail
+
+type ErrorDetail struct {
+	Detail    string `json:"detail"`
+	ErrorCode string `json:"o:errorCode"`
+}
+
+func (d *ErrorDetail) Error() string {
+	if d.ErrorCode != "" {
+		return fmt.Sprintf("%s: %s", d.ErrorCode, d.Detail)
+	}
+	return ""
 }
 
 func checkContentType(response *http.Response) error {
