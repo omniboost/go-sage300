@@ -1,17 +1,17 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewDjPageGetRequest() DjPageGetRequest {
 	r := DjPageGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		NetsuiteDataGetRequest: c.NewNetsuiteDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "DJ2P"
+	r.NetsuiteDataGetRequest.QueryParams().BusinessObject = "DJ2P"
 	return r
 }
 
 type DjPageGetRequest struct {
-	AccountviewDataGetRequest
+	NetsuiteDataGetRequest
 }
 
 func (r *DjPageGetRequest) NewResponseBody() *DjPageGetResponseBody {

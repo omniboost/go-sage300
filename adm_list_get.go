@@ -1,6 +1,6 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewAdmListGetRequest() AdmListGetRequest {
 	r := AdmListGetRequest{

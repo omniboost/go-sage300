@@ -1,19 +1,19 @@
-package accountviewnet_test
+package netsuite_test
 
 import (
 	"encoding/json"
 	"log"
 	"testing"
 
-	accountviewnet "github.com/omniboost/go-accountview.net"
+	netsuite "github.com/omniboost/go-netsuite"
 )
 
 func TestDjPageTypeTest(t *testing.T) {
-	o := accountviewnet.DjPage{
+	o := netsuite.DjPage{
 		DjCode:  "860",
 		HdrDesc: "TEST",
 	}
-	lines := []accountviewnet.DjLine{
+	lines := []netsuite.DjLine{
 		{
 			AcctNr: "9999",
 			Amount: 12.1,
@@ -25,7 +25,7 @@ func TestDjPageTypeTest(t *testing.T) {
 			RecID:  "REC_ID",
 		},
 	}
-	req, err := o.ToAccountviewDataPostRequest(client, lines)
+	req, err := o.ToNetsuiteDataPostRequest(client, lines)
 	if err != nil {
 		t.Error(err)
 		return

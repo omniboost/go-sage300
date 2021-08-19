@@ -1,15 +1,15 @@
-package accountviewnet
+package netsuite
 
 import (
 	"encoding/json"
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-netsuite/utils"
 )
 
-func (c *Client) NewAccountviewDataPostRequest() AccountviewDataPostRequest {
-	r := AccountviewDataPostRequest{
+func (c *Client) NewNetsuiteDataPostRequest() NetsuiteDataPostRequest {
+	r := NetsuiteDataPostRequest{
 		client:  c,
 		method:  http.MethodPost,
 		headers: http.Header{},
@@ -21,22 +21,22 @@ func (c *Client) NewAccountviewDataPostRequest() AccountviewDataPostRequest {
 	return r
 }
 
-type AccountviewDataPostRequest struct {
+type NetsuiteDataPostRequest struct {
 	client      *Client
-	queryParams *AccountviewDataPostRequestQueryParams
-	pathParams  *AccountviewDataPostRequestPathParams
+	queryParams *NetsuiteDataPostRequestQueryParams
+	pathParams  *NetsuiteDataPostRequestPathParams
 	method      string
 	headers     http.Header
-	requestBody AccountviewDataPostRequestBody
+	requestBody NetsuiteDataPostRequestBody
 }
 
-func (r AccountviewDataPostRequest) NewQueryParams() *AccountviewDataPostRequestQueryParams {
-	return &AccountviewDataPostRequestQueryParams{}
+func (r NetsuiteDataPostRequest) NewQueryParams() *NetsuiteDataPostRequestQueryParams {
+	return &NetsuiteDataPostRequestQueryParams{}
 }
 
-type AccountviewDataPostRequestQueryParams struct{}
+type NetsuiteDataPostRequestQueryParams struct{}
 
-func (p AccountviewDataPostRequestQueryParams) ToURLValues() (url.Values, error) {
+func (p NetsuiteDataPostRequestQueryParams) ToURLValues() (url.Values, error) {
 	encoder := utils.NewSchemaEncoder()
 	encoder.RegisterEncoder(Date{}, utils.EncodeSchemaMarshaler)
 	encoder.RegisterEncoder(DateTime{}, utils.EncodeSchemaMarshaler)
@@ -50,74 +50,74 @@ func (p AccountviewDataPostRequestQueryParams) ToURLValues() (url.Values, error)
 	return params, nil
 }
 
-func (r *AccountviewDataPostRequest) QueryParams() *AccountviewDataPostRequestQueryParams {
+func (r *NetsuiteDataPostRequest) QueryParams() *NetsuiteDataPostRequestQueryParams {
 	return r.queryParams
 }
 
-func (r AccountviewDataPostRequest) NewPathParams() *AccountviewDataPostRequestPathParams {
-	return &AccountviewDataPostRequestPathParams{}
+func (r NetsuiteDataPostRequest) NewPathParams() *NetsuiteDataPostRequestPathParams {
+	return &NetsuiteDataPostRequestPathParams{}
 }
 
-type AccountviewDataPostRequestPathParams struct {
+type NetsuiteDataPostRequestPathParams struct {
 }
 
-func (p *AccountviewDataPostRequestPathParams) Params() map[string]string {
+func (p *NetsuiteDataPostRequestPathParams) Params() map[string]string {
 	return map[string]string{}
 }
 
-func (r *AccountviewDataPostRequest) PathParams() *AccountviewDataPostRequestPathParams {
+func (r *NetsuiteDataPostRequest) PathParams() *NetsuiteDataPostRequestPathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataPostRequest) PathParamsInterface() PathParams {
+func (r *NetsuiteDataPostRequest) PathParamsInterface() PathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataPostRequest) SetMethod(method string) {
+func (r *NetsuiteDataPostRequest) SetMethod(method string) {
 	r.method = method
 }
 
-func (r *AccountviewDataPostRequest) Method() string {
+func (r *NetsuiteDataPostRequest) Method() string {
 	return r.method
 }
 
-func (r AccountviewDataPostRequest) NewRequestBody() AccountviewDataPostRequestBody {
-	return AccountviewDataPostRequestBody{}
+func (r NetsuiteDataPostRequest) NewRequestBody() NetsuiteDataPostRequestBody {
+	return NetsuiteDataPostRequestBody{}
 }
 
-type AccountviewDataPostRequestBody struct {
+type NetsuiteDataPostRequestBody struct {
 	BookDate       string    `json:"BookDate"`
 	BusinessObject string    `json:"BusinessObject"`
 	Table          Table     `json:"Table"`
 	TableData      TableData `json:"TableData"`
 }
 
-func (r *AccountviewDataPostRequest) RequestBody() *AccountviewDataPostRequestBody {
+func (r *NetsuiteDataPostRequest) RequestBody() *NetsuiteDataPostRequestBody {
 	return &r.requestBody
 }
 
-func (r *AccountviewDataPostRequest) RequestBodyInterface() interface{} {
+func (r *NetsuiteDataPostRequest) RequestBodyInterface() interface{} {
 	return r.RequestBody()
 }
 
-func (r *AccountviewDataPostRequest) SetRequestBody(body AccountviewDataPostRequestBody) {
+func (r *NetsuiteDataPostRequest) SetRequestBody(body NetsuiteDataPostRequestBody) {
 	r.requestBody = body
 }
 
-func (r *AccountviewDataPostRequest) NewResponseBody() *AccountviewDataPostResponseBody {
-	return &AccountviewDataPostResponseBody{}
+func (r *NetsuiteDataPostRequest) NewResponseBody() *NetsuiteDataPostResponseBody {
+	return &NetsuiteDataPostResponseBody{}
 }
 
-type AccountviewDataPostResponseBody struct {
+type NetsuiteDataPostResponseBody struct {
 	json.RawMessage
 }
 
-func (r *AccountviewDataPostRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("accountviewdata", r.PathParams())
+func (r *NetsuiteDataPostRequest) URL() *url.URL {
+	u := r.client.GetEndpointURL("netsuitedata", r.PathParams())
 	return &u
 }
 
-func (r *AccountviewDataPostRequest) Do() (AccountviewDataPostResponseBody, error) {
+func (r *NetsuiteDataPostRequest) Do() (NetsuiteDataPostResponseBody, error) {
 	// Create http request
 	req, err := r.client.NewRequest(nil, r)
 	if err != nil {

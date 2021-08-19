@@ -1,4 +1,4 @@
-package accountviewnet_test
+package netsuite_test
 
 import (
 	"encoding/json"

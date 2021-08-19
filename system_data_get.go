@@ -1,10 +1,10 @@
-package accountviewnet
+package netsuite
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-netsuite/utils"
 )
 
 func (c *Client) NewSystemDataGetRequest() SystemDataGetRequest {
@@ -184,7 +184,7 @@ type SystemDataGetResponseBody struct {
 }
 
 func (r *SystemDataGetRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("accountviewsystemdata", r.PathParams())
+	u := r.client.GetEndpointURL("netsuitesystemdata", r.PathParams())
 	return &u
 }
 

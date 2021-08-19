@@ -1,4 +1,4 @@
-package accountviewnet_test
+package netsuite_test
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 
 func TestLedgerGet(t *testing.T) {
 	req := client.NewLedgerGetRequest()
-	req.QueryParams().PageSize = 20
+	req.QueryParams().PageSize = 1000
 	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)

@@ -1,4 +1,4 @@
-package accountviewnet
+package netsuite
 
 type DjPage struct {
 	AcctNr    string   `json:"ACCT_NR" field_type:"C"`    // Rekeningnr
@@ -117,10 +117,10 @@ func (djPage DjPage) Values() ([]interface{}, error) {
 	return FieldsToValues(djPage, djPage.Fields())
 }
 
-func (djPage DjPage) ToAccountviewDataPostRequest(client *Client, lines []DjLine) (AccountviewDataPostRequest, error) {
+func (djPage DjPage) ToNetsuiteDataPostRequest(client *Client, lines []DjLine) (NetsuiteDataPostRequest, error) {
 	children := make([]BusinessObjectInterface, len(lines))
 	for i, v := range lines {
 		children[i] = BusinessObjectInterface(v)
 	}
-	return BusinessObjectToAccountviewDataPostRequest(client, djPage, children)
+	return BusinessObjectToNetsuiteDataPostRequest(client, djPage, children)
 }

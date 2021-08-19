@@ -1,4 +1,4 @@
-module github.com/omniboost/go-accountview.net
+module github.com/omniboost/go-netsuite
 
 go 1.16
 

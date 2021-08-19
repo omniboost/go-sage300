@@ -1,17 +1,17 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewCompHdrGetRequest() CompHdrGetRequest {
 	r := CompHdrGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		NetsuiteDataGetRequest: c.NewNetsuiteDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "CMP1"
+	r.NetsuiteDataGetRequest.QueryParams().BusinessObject = "CMP1"
 	return r
 }
 
 type CompHdrGetRequest struct {
-	AccountviewDataGetRequest
+	NetsuiteDataGetRequest
 }
 
 func (r *CompHdrGetRequest) NewResponseBody() *CompHdrGetResponseBody {

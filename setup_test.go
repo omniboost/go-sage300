@@ -1,4 +1,4 @@
-package accountviewnet_test
+package netsuite_test
 
 import (
 	"log"
@@ -6,12 +6,12 @@ import (
 	"os"
 	"testing"
 
-	accountviewnet "github.com/omniboost/go-accountview.net"
+	netsuite "github.com/omniboost/go-netsuite"
 	"golang.org/x/oauth2"
 )
 
 var (
-	client *accountviewnet.Client
+	client *netsuite.Client
 )
 
 func TestMain(m *testing.M) {
@@ -33,7 +33,7 @@ func TestMain(m *testing.M) {
 		}
 	}
 
-	oauthConfig := accountviewnet.NewOauth2Config()
+	oauthConfig := netsuite.NewOauth2Config()
 	oauthConfig.ClientID = clientID
 	oauthConfig.ClientSecret = clientSecret
 
@@ -56,7 +56,7 @@ func TestMain(m *testing.M) {
 	// get http client with automatic oauth logic
 	httpClient := oauthConfig.Client(oauth2.NoContext, token)
 
-	client = accountviewnet.NewClient(httpClient, companyID)
+	client = netsuite.NewClient(httpClient, companyID)
 	if debug != "" {
 		client.SetDebug(true)
 	}

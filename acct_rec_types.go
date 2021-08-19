@@ -1,4 +1,4 @@
-package accountviewnet
+package netsuite
 
 type AcctRec struct {
 	AcctNr string `json:"ACCT_NR"` // Verzamelrekening
@@ -37,9 +37,9 @@ func (acctRec AcctRec) Values() ([]interface{}, error) {
 	return FieldsToValues(acctRec, acctRec.Fields())
 }
 
-func (acctRec AcctRec) ToAccountviewDataPostRequest(client *Client) (AccountviewDataPostRequest, error) {
+func (acctRec AcctRec) ToNetsuiteDataPostRequest(client *Client) (NetsuiteDataPostRequest, error) {
 	children := make([]BusinessObjectInterface, 0)
-	return BusinessObjectToAccountviewDataPostRequest(client, acctRec, children)
+	return BusinessObjectToNetsuiteDataPostRequest(client, acctRec, children)
 }
 
 type Contact struct {
@@ -84,7 +84,7 @@ type Contact struct {
 	BnkClear  bool     `json:"BNK_CLEAR"`  // Postbankrekening zuiver
 	BnkCode1  string   `json:"BNK_CODE1"`  // Bankcode, bankrekening 1
 	BnkCode2  string   `json:"BNK_CODE2"`  // Bankcode, bankrekening 2
-	BosCode   string   `json:"BOS_CODE"`   // AccountView Server-code
+	BosCode   string   `json:"BOS_CODE"`   // Netsuite Server-code
 	BoxCity   string   `json:"BOX_CITY"`   // Plaats of plaats postadres
 	BvNr      string   `json:"BV_NR"`      // Aansluitnummer UWV
 	BvPct     float64  `json:"BV_PCT"`     // Percentage UWV

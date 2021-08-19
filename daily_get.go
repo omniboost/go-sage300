@@ -1,17 +1,17 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewDailyGetRequest() DailyGetRequest {
 	r := DailyGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		NetsuiteDataGetRequest: c.NewNetsuiteDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "DJ1"
+	r.NetsuiteDataGetRequest.QueryParams().BusinessObject = "DJ1"
 	return r
 }
 
 type DailyGetRequest struct {
-	AccountviewDataGetRequest
+	NetsuiteDataGetRequest
 }
 
 func (r *DailyGetRequest) NewResponseBody() *DailyGetResponseBody {

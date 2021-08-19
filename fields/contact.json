@@ -738,7 +738,7 @@
     "DCT_FLD_Id": 40
   },
   {
-    "FLD_DESC": "AccountView Server-code",
+    "FLD_DESC": "Netsuite Server-code",
     "FIELD_NAME": "BOS_CODE",
     "DBF_NAME": "CONTACT",
     "FIELD_LEN": 10,

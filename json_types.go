@@ -1,4 +1,4 @@
-package accountviewnet
+package netsuite
 
 import (
 	"encoding/json"

@@ -1,17 +1,17 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewCostGetRequest() CostGetRequest {
 	r := CostGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		NetsuiteDataGetRequest: c.NewNetsuiteDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "CC1"
+	r.NetsuiteDataGetRequest.QueryParams().BusinessObject = "CC1"
 	return r
 }
 
 type CostGetRequest struct {
-	AccountviewDataGetRequest
+	NetsuiteDataGetRequest
 }
 
 func (r *CostGetRequest) NewResponseBody() *CostGetResponseBody {

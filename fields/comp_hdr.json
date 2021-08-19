@@ -414,7 +414,7 @@
     "DCT_FLD_Id": 22
   },
   {
-    "FLD_DESC": "AccountView Contact (alleen-lezen)",
+    "FLD_DESC": "Netsuite Contact (alleen-lezen)",
     "FIELD_NAME": "IS_CON_APP",
     "DBF_NAME": "COMP_HDR",
     "FIELD_LEN": 1,
@@ -468,7 +468,7 @@
     "DCT_FLD_Id": 25
   },
   {
-    "FLD_DESC": "AccountView Go",
+    "FLD_DESC": "Netsuite Go",
     "FIELD_NAME": "IS_GO",
     "DBF_NAME": "COMP_HDR",
     "FIELD_LEN": 1,

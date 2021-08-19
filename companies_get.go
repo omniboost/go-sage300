@@ -1,10 +1,10 @@
-package accountviewnet
+package netsuite
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-netsuite/utils"
 )
 
 func (c *Client) NewCompaniesGetRequest() CompaniesGetRequest {

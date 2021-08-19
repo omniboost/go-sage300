@@ -1,17 +1,17 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewVATGetRequest() VATGetRequest {
 	r := VATGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		NetsuiteDataGetRequest: c.NewNetsuiteDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "VA1"
+	r.NetsuiteDataGetRequest.QueryParams().BusinessObject = "VA1"
 	return r
 }
 
 type VATGetRequest struct {
-	AccountviewDataGetRequest
+	NetsuiteDataGetRequest
 }
 
 func (r *VATGetRequest) NewResponseBody() *VATGetResponseBody {

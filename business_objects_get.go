@@ -1,10 +1,10 @@
-package accountviewnet
+package netsuite
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-netsuite/utils"
 )
 
 func (c *Client) NewBusinessObjectsGetRequest() BusinessObjectsGetRequest {
@@ -109,7 +109,7 @@ func (r *BusinessObjectsGetRequest) NewResponseBody() *BusinessObjectsGetRespons
 type BusinessObjectsGetResponseBody BusinessObjects
 
 func (r *BusinessObjectsGetRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("accountviewsystembusinessobjects", r.PathParams())
+	u := r.client.GetEndpointURL("netsuitesystembusinessobjects", r.PathParams())
 	return &u
 }
 

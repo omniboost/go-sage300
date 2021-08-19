@@ -1,4 +1,4 @@
-package accountviewnet
+package netsuite
 
 import (
 	"strings"
@@ -156,10 +156,10 @@ type CompHdr struct {
 	InpDate   DateTime `json:"INP_DATE"`   // Invoerdatum
 	InpUsr    string   `json:"INP_USR"`    // Invoermedewerker
 	IsAutoi   bool     `json:"IS_AUTOI"`   // AutoInvoice-onderneming
-	IsConApp  bool     `json:"IS_CON_APP"` // AccountView Contact (alleen-lezen)
+	IsConApp  bool     `json:"IS_CON_APP"` // Netsuite Contact (alleen-lezen)
 	IsEverb   bool     `json:"IS_EVERB"`   // eVerbinding-onderneming
 	IsFo      bool     `json:"IS_FO"`      // Financial Overview-onderneming
-	IsGo      bool     `json:"IS_GO"`      // AccountView Go
+	IsGo      bool     `json:"IS_GO"`      // Netsuite Go
 	IsPayl    bool     `json:"IS_PAYL"`    // Betaallinkdienst-onderneming
 	IsScan    bool     `json:"IS_SCAN"`    // Scanboeken-onderneming
 	IsVdc     bool     `json:"IS_VDC"`     // Beschikbaar in IFA

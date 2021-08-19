@@ -1,10 +1,10 @@
-package accountviewnet
+package netsuite
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-netsuite/utils"
 )
 
 func (c *Client) NewFieldsGetRequest() FieldsGetRequest {
@@ -110,7 +110,7 @@ type FieldsGetResponseBody struct {
 }
 
 func (r *FieldsGetRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("accountviewfields", r.PathParams())
+	u := r.client.GetEndpointURL("netsuitefields", r.PathParams())
 	return &u
 }
 

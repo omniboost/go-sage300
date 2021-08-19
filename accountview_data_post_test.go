@@ -1,22 +1,22 @@
-package accountviewnet_test
+package netsuite_test
 
 import (
 	"encoding/json"
 	"log"
 	"testing"
 
-	accountviewnet "github.com/omniboost/go-accountview.net"
+	netsuite "github.com/omniboost/go-netsuite"
 )
 
-func TestAccountviewDataPost(t *testing.T) {
-	req := client.NewAccountviewDataPostRequest()
-	req.SetRequestBody(accountviewnet.AccountviewDataPostRequestBody{
+func TestNetsuiteDataPost(t *testing.T) {
+	req := client.NewNetsuiteDataPostRequest()
+	req.SetRequestBody(netsuite.NetsuiteDataPostRequestBody{
 		BookDate:       "2021-07-02T10:39:05.276Z",
 		BusinessObject: "DJ2",
-		Table: accountviewnet.Table{
-			Definition: accountviewnet.TableDefinition{
+		Table: netsuite.Table{
+			Definition: netsuite.TableDefinition{
 				Name: "DJ_PAGE",
-				Fields: accountviewnet.TableDefinitionFields{
+				Fields: netsuite.TableDefinitionFields{
 					{
 						Name:      "RowId",
 						FieldType: "C",
@@ -35,10 +35,10 @@ func TestAccountviewDataPost(t *testing.T) {
 					},
 				},
 			},
-			DetailDefinitions: accountviewnet.TableDetailDefinitions{
+			DetailDefinitions: netsuite.TableDetailDefinitions{
 				{
 					Name: "DJ_LINE",
-					Fields: accountviewnet.TableDefinitionFields{
+					Fields: netsuite.TableDefinitionFields{
 						{
 							Name:      "RowId",
 							FieldType: "C",
@@ -75,9 +75,9 @@ func TestAccountviewDataPost(t *testing.T) {
 				},
 			},
 		},
-		TableData: accountviewnet.TableData{
-			Data: accountviewnet.TableDataData{
-				Rows: accountviewnet.Rows{
+		TableData: netsuite.TableData{
+			Data: netsuite.TableDataData{
+				Rows: netsuite.Rows{
 					{
 						Values: []interface{}{
 							"1",
@@ -88,9 +88,9 @@ func TestAccountviewDataPost(t *testing.T) {
 					},
 				},
 			},
-			DetailData: accountviewnet.DetailData{
+			DetailData: netsuite.DetailData{
 				{
-					Rows: accountviewnet.Rows{
+					Rows: netsuite.Rows{
 						{
 							Values: []interface{}{
 								"1",

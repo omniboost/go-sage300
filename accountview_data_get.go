@@ -1,14 +1,14 @@
-package accountviewnet
+package netsuite
 
 import (
 	"net/http"
 	"net/url"
 
-	"github.com/omniboost/go-accountview.net/utils"
+	"github.com/omniboost/go-netsuite/utils"
 )
 
-func (c *Client) NewAccountviewDataGetRequest() AccountviewDataGetRequest {
-	r := AccountviewDataGetRequest{
+func (c *Client) NewNetsuiteDataGetRequest() NetsuiteDataGetRequest {
+	r := NetsuiteDataGetRequest{
 		client:  c,
 		method:  http.MethodGet,
 		headers: http.Header{},
@@ -20,20 +20,20 @@ func (c *Client) NewAccountviewDataGetRequest() AccountviewDataGetRequest {
 	return r
 }
 
-type AccountviewDataGetRequest struct {
+type NetsuiteDataGetRequest struct {
 	client      *Client
-	queryParams *AccountviewDataGetRequestQueryParams
-	pathParams  *AccountviewDataGetRequestPathParams
+	queryParams *NetsuiteDataGetRequestQueryParams
+	pathParams  *NetsuiteDataGetRequestPathParams
 	method      string
 	headers     http.Header
-	requestBody AccountviewDataGetRequestBody
+	requestBody NetsuiteDataGetRequestBody
 }
 
-func (r AccountviewDataGetRequest) NewQueryParams() *AccountviewDataGetRequestQueryParams {
-	return &AccountviewDataGetRequestQueryParams{}
+func (r NetsuiteDataGetRequest) NewQueryParams() *NetsuiteDataGetRequestQueryParams {
+	return &NetsuiteDataGetRequestQueryParams{}
 }
 
-type AccountviewDataGetRequestQueryParams struct {
+type NetsuiteDataGetRequestQueryParams struct {
 	BusinessObject string `schema:"BusinessObject"`
 	PageSize       int    `schema:"PageSize"`
 	Fields         string `schema:"Fields,omitempty"`
@@ -54,7 +54,7 @@ type AccountviewDataGetRequestQueryParams struct {
 	SortOrder  string `schema:"SortOrder,omitempty"`
 }
 
-func (p AccountviewDataGetRequestQueryParams) ToURLValues() (url.Values, error) {
+func (p NetsuiteDataGetRequestQueryParams) ToURLValues() (url.Values, error) {
 	encoder := utils.NewSchemaEncoder()
 	encoder.RegisterEncoder(Date{}, utils.EncodeSchemaMarshaler)
 	encoder.RegisterEncoder(DateTime{}, utils.EncodeSchemaMarshaler)
@@ -68,68 +68,68 @@ func (p AccountviewDataGetRequestQueryParams) ToURLValues() (url.Values, error) 
 	return params, nil
 }
 
-func (r *AccountviewDataGetRequest) QueryParams() *AccountviewDataGetRequestQueryParams {
+func (r *NetsuiteDataGetRequest) QueryParams() *NetsuiteDataGetRequestQueryParams {
 	return r.queryParams
 }
 
-func (r AccountviewDataGetRequest) NewPathParams() *AccountviewDataGetRequestPathParams {
-	return &AccountviewDataGetRequestPathParams{}
+func (r NetsuiteDataGetRequest) NewPathParams() *NetsuiteDataGetRequestPathParams {
+	return &NetsuiteDataGetRequestPathParams{}
 }
 
-type AccountviewDataGetRequestPathParams struct {
+type NetsuiteDataGetRequestPathParams struct {
 }
 
-func (p *AccountviewDataGetRequestPathParams) Params() map[string]string {
+func (p *NetsuiteDataGetRequestPathParams) Params() map[string]string {
 	return map[string]string{}
 }
 
-func (r *AccountviewDataGetRequest) PathParams() *AccountviewDataGetRequestPathParams {
+func (r *NetsuiteDataGetRequest) PathParams() *NetsuiteDataGetRequestPathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataGetRequest) PathParamsInterface() PathParams {
+func (r *NetsuiteDataGetRequest) PathParamsInterface() PathParams {
 	return r.pathParams
 }
 
-func (r *AccountviewDataGetRequest) SetMethod(method string) {
+func (r *NetsuiteDataGetRequest) SetMethod(method string) {
 	r.method = method
 }
 
-func (r *AccountviewDataGetRequest) Method() string {
+func (r *NetsuiteDataGetRequest) Method() string {
 	return r.method
 }
 
-func (r AccountviewDataGetRequest) NewRequestBody() AccountviewDataGetRequestBody {
-	return AccountviewDataGetRequestBody{}
+func (r NetsuiteDataGetRequest) NewRequestBody() NetsuiteDataGetRequestBody {
+	return NetsuiteDataGetRequestBody{}
 }
 
-type AccountviewDataGetRequestBody struct {
+type NetsuiteDataGetRequestBody struct {
 }
 
-func (r *AccountviewDataGetRequest) RequestBody() *AccountviewDataGetRequestBody {
+func (r *NetsuiteDataGetRequest) RequestBody() *NetsuiteDataGetRequestBody {
 	return nil
 }
 
-func (r *AccountviewDataGetRequest) RequestBodyInterface() interface{} {
+func (r *NetsuiteDataGetRequest) RequestBodyInterface() interface{} {
 	return nil
 }
 
-func (r *AccountviewDataGetRequest) SetRequestBody(body AccountviewDataGetRequestBody) {
+func (r *NetsuiteDataGetRequest) SetRequestBody(body NetsuiteDataGetRequestBody) {
 	r.requestBody = body
 }
 
-func (r *AccountviewDataGetRequest) NewResponseBody() *AccountviewDataGetResponseBody {
-	return &AccountviewDataGetResponseBody{}
+func (r *NetsuiteDataGetRequest) NewResponseBody() *NetsuiteDataGetResponseBody {
+	return &NetsuiteDataGetResponseBody{}
 }
 
-type AccountviewDataGetResponseBody struct{}
+type NetsuiteDataGetResponseBody struct{}
 
-func (r *AccountviewDataGetRequest) URL() *url.URL {
-	u := r.client.GetEndpointURL("accountviewdata", r.PathParams())
+func (r *NetsuiteDataGetRequest) URL() *url.URL {
+	u := r.client.GetEndpointURL("netsuitedata", r.PathParams())
 	return &u
 }
 
-func (r *AccountviewDataGetRequest) Do() (AccountviewDataGetResponseBody, error) {
+func (r *NetsuiteDataGetRequest) Do() (NetsuiteDataGetResponseBody, error) {
 	// Create http request
 	req, err := r.client.NewRequest(nil, r)
 	if err != nil {

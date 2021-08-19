@@ -1,17 +1,17 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewLedgerGetRequest() LedgerGetRequest {
 	r := LedgerGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		NetsuiteDataGetRequest: c.NewNetsuiteDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "GL1"
+	r.NetsuiteDataGetRequest.QueryParams().BusinessObject = "GL1"
 	return r
 }
 
 type LedgerGetRequest struct {
-	AccountviewDataGetRequest
+	NetsuiteDataGetRequest
 }
 
 func (r *LedgerGetRequest) NewResponseBody() *LedgerGetResponseBody {

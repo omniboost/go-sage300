@@ -1,17 +1,17 @@
-package accountviewnet
+package netsuite
 
-import "github.com/omniboost/go-accountview.net/utils"
+import "github.com/omniboost/go-netsuite/utils"
 
 func (c *Client) NewTransactGetRequest() TransactGetRequest {
 	r := TransactGetRequest{
-		AccountviewDataGetRequest: c.NewAccountviewDataGetRequest(),
+		NetsuiteDataGetRequest: c.NewNetsuiteDataGetRequest(),
 	}
-	r.AccountviewDataGetRequest.QueryParams().BusinessObject = "GJ1"
+	r.NetsuiteDataGetRequest.QueryParams().BusinessObject = "GJ1"
 	return r
 }
 
 type TransactGetRequest struct {
-	AccountviewDataGetRequest
+	NetsuiteDataGetRequest
 }
 
 func (r *TransactGetRequest) NewResponseBody() *TransactGetResponseBody {
