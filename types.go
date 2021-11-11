@@ -111,3 +111,142 @@ type GLAccount struct {
 	RollupMemberPreview              []interface{} `json:"RollupMemberPreview"`
 	UpdateOperation                  string        `json:"UpdateOperation"`
 }
+
+type TaxRates []TaxRate
+
+type TaxRate struct {
+	TaxAuthority    string      `json:"TaxAuthority"`
+	TransactionType string      `json:"TransactionType"`
+	BuyerClass      int         `json:"BuyerClass"`
+	ItemRate1       float64     `json:"ItemRate1"`
+	ItemRate2       float64     `json:"ItemRate2"`
+	ItemRate3       float64     `json:"ItemRate3"`
+	ItemRate4       float64     `json:"ItemRate4"`
+	ItemRate5       float64     `json:"ItemRate5"`
+	ItemRate6       float64     `json:"ItemRate6"`
+	ItemRate7       float64     `json:"ItemRate7"`
+	ItemRate8       float64     `json:"ItemRate8"`
+	ItemRate9       float64     `json:"ItemRate9"`
+	ItemRate10      float64     `json:"ItemRate10"`
+	LastMaintained  interface{} `json:"LastMaintained"`
+	UpdateOperation string      `json:"UpdateOperation"`
+}
+
+type TaxGroups []TaxGroup
+
+type TaxGroup struct {
+	TaxGroupKey          string    `json:"TaxGroupKey"`
+	TransactionType      string    `json:"TransactionType"`
+	Description          string    `json:"Description"`
+	TaxReportingCurrency string    `json:"TaxReportingCurrency"`
+	TaxAuthority1        string    `json:"TaxAuthority1"`
+	TaxAuthority2        string    `json:"TaxAuthority2"`
+	TaxAuthority3        string    `json:"TaxAuthority3"`
+	TaxAuthority4        string    `json:"TaxAuthority4"`
+	TaxAuthority5        string    `json:"TaxAuthority5"`
+	Taxable1             bool      `json:"Taxable1"`
+	Taxable2             bool      `json:"Taxable2"`
+	Taxable3             bool      `json:"Taxable3"`
+	Taxable4             bool      `json:"Taxable4"`
+	Taxable5             bool      `json:"Taxable5"`
+	TaxCalculationMethod string    `json:"TaxCalculationMethod"`
+	LastMaintained       time.Time `json:"LastMaintained"`
+	Surtax1              bool      `json:"Surtax1"`
+	Surtax2              bool      `json:"Surtax2"`
+	Surtax3              bool      `json:"Surtax3"`
+	Surtax4              bool      `json:"Surtax4"`
+	Surtax5              bool      `json:"Surtax5"`
+	SurtaxOnAuthority1   string    `json:"SurtaxOnAuthority1"`
+	SurtaxOnAuthority2   string    `json:"SurtaxOnAuthority2"`
+	SurtaxOnAuthority3   string    `json:"SurtaxOnAuthority3"`
+	SurtaxOnAuthority4   string    `json:"SurtaxOnAuthority4"`
+	SurtaxOnAuthority5   string    `json:"SurtaxOnAuthority5"`
+	TaxReportingRateType string    `json:"TaxReportingRateType"`
+	UpdateOperation      string    `json:"UpdateOperation"`
+}
+
+type PostedTransactions []PostedTransaction
+
+type PostedTransaction struct {
+	AccountNumber               string    `json:"AccountNumber"`
+	FiscalYear                  string    `json:"FiscalYear"`
+	FiscalPeriod                string    `json:"FiscalPeriod"`
+	SourceCurrencyCode          string    `json:"SourceCurrencyCode"`
+	SourceLedgerCode            string    `json:"SourceLedgerCode"`
+	SourceTypeCode              string    `json:"SourceTypeCode"`
+	PostingSequenceNumber       int       `json:"PostingSequenceNumber"`
+	DetailCount                 int       `json:"DetailCount"`
+	JournalDate                 time.Time `json:"JournalDate"`
+	BatchNumber                 string    `json:"BatchNumber"`
+	JournalEntryNumber          string    `json:"JournalEntryNumber"`
+	JournalTransactionNumber    int       `json:"JournalTransactionNumber"`
+	ConsolidationOccurredOnPost string    `json:"ConsolidationOccurredOnPost"`
+	CompanyID                   string    `json:"CompanyID"`
+	JournalDetailDescription    string    `json:"JournalDetailDescription"`
+	JournalDetailReference      string    `json:"JournalDetailReference"`
+	JournalTransactionAmount    float64   `json:"JournalTransactionAmount"`
+	JournalTransactionQuantity  float64   `json:"JournalTransactionQuantity"`
+	NbrOfSourceCurrencyDecimals string    `json:"NbrOfSourceCurrencyDecimals"`
+	SourceCurrencyAmount        float64   `json:"SourceCurrencyAmount"`
+	HomeCurrencyCode            string    `json:"HomeCurrencyCode"`
+	CurrencyRateTableType       string    `json:"CurrencyRateTableType"`
+	SCURNCODE                   string    `json:"SCURNCODE"`
+	DateOfCurrencyRateSelected  time.Time `json:"DateOfCurrencyRateSelected"`
+	CurrencyRateForConversion   int       `json:"CurrencyRateForConversion"`
+	CurrencyRateSpreadAllowed   float64   `json:"CurrencyRateSpreadAllowed"`
+	CodeForRateDateMatching     string    `json:"CodeForRateDateMatching"`
+	CurrencyRateOperator        string    `json:"CurrencyRateOperator"`
+	DrillDownType               int       `json:"DrillDownType"`
+	DrillDownLinkNumber         int       `json:"DrillDownLinkNumber"`
+	DrillDownApplicationSource  string    `json:"DrillDownApplicationSource"`
+	ReportCurrencyAmount        float64   `json:"ReportCurrencyAmount"`
+	NumberOfOptionalFields      int       `json:"NumberOfOptionalFields"`
+	DocumentDate                time.Time `json:"DocumentDate"`
+	TaxReportingStatus          int       `json:"TaxReportingStatus"`
+	TaxAuthority                string    `json:"TaxAuthority"`
+	TaxAccountType              string    `json:"TaxAccountType"`
+	UpdateOperation             string    `json:"UpdateOperation"`
+}
+
+type PostingJournalDetails []PostingJournalDetail
+
+type PostingJournalDetail struct {
+	Postingsequencenumber       int       `json:"Postingsequencenumber"`
+	BatchNumber                 string    `json:"BatchNumber"`
+	Journalentrynumber          string    `json:"Journalentrynumber"`
+	Journaltransactionnumber    int       `json:"Journaltransactionnumber"`
+	Journaldate                 time.Time `json:"Journaldate"`
+	Fiscalyear                  string    `json:"Fiscalyear"`
+	Fiscalperiod                string    `json:"Fiscalperiod"`
+	SourceLedgerCode            string    `json:"SourceLedgerCode"`
+	SourceTypeCode              string    `json:"SourceTypeCode"`
+	ConsolidationoccurredOnpost string    `json:"ConsolidationoccurredOnpost"`
+	AccountNumber               string    `json:"AccountNumber"`
+	CompanyID                   string    `json:"CompanyID"`
+	Journaldetaildescription    string    `json:"Journaldetaildescription"`
+	Journaldetailreference      string    `json:"Journaldetailreference"`
+	Journaltransactionamount    float64   `json:"Journaltransactionamount"`
+	Journaltransactionquantity  float64   `json:"Journaltransactionquantity"`
+	NbrOfsourcecurrencydecimals string    `json:"NbrOfsourcecurrencydecimals"`
+	Sourcecurrencyamount        float64   `json:"Sourcecurrencyamount"`
+	Homecurrencycode            string    `json:"Homecurrencycode"`
+	Currencyratetabletype       string    `json:"Currencyratetabletype"`
+	Sourcecurrencycode          string    `json:"Sourcecurrencycode"`
+	DateOfcurrencyrateselected  time.Time `json:"DateOfcurrencyrateselected"`
+	CurrencyrateForconversion   int       `json:"CurrencyrateForconversion"`
+	Currencyratespreadallowed   float64   `json:"Currencyratespreadallowed"`
+	CodeForratedatematching     string    `json:"CodeForratedatematching"`
+	Currencyrateoperator        string    `json:"Currencyrateoperator"`
+	Printedstatuscode           string    `json:"Printedstatuscode"`
+	PostingDate                 time.Time `json:"PostingDate"`
+	Reportcurrencyamount        float64   `json:"Reportcurrencyamount"`
+	NumberOfOptionalFields      int       `json:"NumberOfOptionalFields"`
+	Originator                  string    `json:"Originator"`
+	AutoReversal                string    `json:"AutoReversal"`
+	Destination                 string    `json:"Destination"`
+	RouteNumber                 int       `json:"RouteNumber"`
+	DocumentDate                time.Time `json:"DocumentDate"`
+	TaxAuthority                string    `json:"TaxAuthority"`
+	TaxAccountType              string    `json:"TaxAccountType"`
+	UpdateOperation             string    `json:"UpdateOperation"`
+}
