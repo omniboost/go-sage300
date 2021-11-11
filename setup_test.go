@@ -1,47 +1,29 @@
-package netsuite_test
+package sage300_test
 
 import (
-	"context"
+	"fmt"
+	"log"
+	"net/http"
+	"net/url"
 	"os"
 	"testing"
 
-	netsuite "github.com/omniboost/go-netsuite"
-	"golang.org/x/oauth2"
+	sage300 "github.com/omniboost/go-sage300"
+	"golang.org/x/net/proxy"
 )
 
 var (
-	client *netsuite.Client
+	client *sage300.Client
 )
 
 func TestMain(m *testing.M) {
-	baseURL := os.Getenv("BASE_URL")
-	clientID := os.Getenv("CLIENT_ID")
-	clientSecret := os.Getenv("CLIENT_SECRET")
-	refreshToken := os.Getenv("REFRESH_TOKEN")
-	tokenURL := os.Getenv("TOKEN_URL")
-	companyID := os.Getenv("COMPANY_ID")
-	debug := os.Getenv("DEBUG")
+	baseURL := os.Getenv("SAGE_BASE_URL")
+	username := os.Getenv("SAGE_USERNAME")
+	password := os.Getenv("SAGE_PASSWORD")
+	companyID := os.Getenv("SAGE_COMPANY_ID")
+	debug := os.Getenv("SAGE_DEBUG")
 
-	oauthConfig := netsuite.NewOauth2Config(companyID)
-	oauthConfig.ClientID = clientID
-	oauthConfig.ClientSecret = clientSecret
-
-	// set alternative token url
-	if tokenURL != "" {
-		oauthConfig.Endpoint.TokenURL = tokenURL
-	}
-
-	// b, _ := json.MarshalIndent(oauthConfig, "", "  ")
-	// log.Fatal(string(b))
-
-	token := &oauth2.Token{
-		RefreshToken: refreshToken,
-	}
-
-	// get http client with automatic oauth logic
-	httpClient := oauthConfig.Client(context.Background(), token)
-
-	client = netsuite.NewClient(httpClient, companyID)
+	client = sage300.NewClient(nil, username, password, companyID)
 	if debug != "" {
 		client.SetDebug(true)
 	}
@@ -51,5 +33,29 @@ func TestMain(m *testing.M) {
 	}
 
 	client.SetDisallowUnknownFields(true)
+
+	allProxy := os.Getenv("ALL_PROXY")
+	if allProxy != "" {
+		proxyUrl, err := url.Parse(allProxy)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		addr := fmt.Sprintf("%s:%s", proxyUrl.Hostname(), proxyUrl.Port())
+
+		dialSocksProxy, err := proxy.SOCKS5("tcp", addr, nil, proxy.Direct)
+		if err != nil {
+			fmt.Println("Error connecting to proxy:", err)
+		}
+		tr := &http.Transport{Dial: dialSocksProxy.Dial}
+
+		httpClient := &http.Client{
+			Transport: tr,
+			// Timeout: 30 * time.Second,
+		}
+
+		client.SetHTTPClient(httpClient)
+	}
+
 	m.Run()
 }

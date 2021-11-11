@@ -1,4 +1,4 @@
-package netsuite
+package sage300
 
 import (
 	"bytes"
@@ -20,17 +20,15 @@ import (
 
 const (
 	libraryVersion = "0.0.1"
-	userAgent      = "go-netsuite/" + libraryVersion
+	userAgent      = "go-sage300/" + libraryVersion
 	mediaType      = "application/json"
 	charset        = "utf-8"
-)
-
-var (
-	BaseURL string = "https://{{.account_id}}.suitetalk.api.netsuite.com/services/rest/record/v1"
+	apiVersion     = "1.0"
+	tenantID       = "-"
 )
 
 // NewClient returns a new Exact Globe Client client
-func NewClient(httpClient *http.Client, companyID string) *Client {
+func NewClient(httpClient *http.Client, username, password, companyID string) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
@@ -38,8 +36,10 @@ func NewClient(httpClient *http.Client, companyID string) *Client {
 	client := &Client{}
 
 	client.SetHTTPClient(httpClient)
+	client.SetBaseURL("")
+	client.SetUsername(username)
+	client.SetPassword(password)
 	client.SetCompanyID(companyID)
-	client.SetBaseURL(BaseURL)
 	client.SetDebug(false)
 	client.SetUserAgent(userAgent)
 	client.SetMediaType(mediaType)
@@ -57,6 +57,8 @@ type Client struct {
 	baseURL string
 
 	// credentials
+	username  string
+	password  string
 	companyID string
 
 	// User agent for client
@@ -88,12 +90,28 @@ func (c *Client) SetDebug(debug bool) {
 	c.debug = debug
 }
 
+func (c Client) Username() string {
+	return c.username
+}
+
+func (c *Client) SetUsername(username string) {
+	c.username = username
+}
+
+func (c Client) Password() string {
+	return c.password
+}
+
+func (c *Client) SetPassword(password string) {
+	c.password = password
+}
+
 func (c Client) CompanyID() string {
 	return c.companyID
 }
 
-func (c *Client) SetCompanyID(companyID string) {
-	c.companyID = companyID
+func (c *Client) SetCompanyID(companyid string) {
+	c.companyID = companyid
 }
 
 func (c Client) BaseURL() (*url.URL, error) {
@@ -102,7 +120,7 @@ func (c Client) BaseURL() (*url.URL, error) {
 		return &url.URL{}, err
 	}
 	buf := new(bytes.Buffer)
-	err = tmpl.Execute(buf, map[string]interface{}{"account_id": c.companyID})
+	err = tmpl.Execute(buf, map[string]interface{}{})
 	if err != nil {
 		return &url.URL{}, err
 	}
@@ -172,7 +190,9 @@ func (c *Client) GetEndpointURL(p string, pathParams PathParams) (url.URL, error
 
 	buf := new(bytes.Buffer)
 	params := pathParams.Params()
-	// params["administration_id"] = c.Administration()
+	params["api_version"] = apiVersion
+	params["tenant_id"] = tenantID
+	params["company_id"] = c.CompanyID()
 	err = tmpl.Execute(buf, params)
 	if err != nil {
 		return url.URL{}, err
@@ -213,6 +233,8 @@ func (c *Client) NewRequest(ctx context.Context, req Request) (*http.Request, er
 	if ctx != nil {
 		r = r.WithContext(ctx)
 	}
+
+	r.SetBasicAuth(c.Username(), c.Password())
 
 	// set other headers
 	r.Header.Add("Content-Type", fmt.Sprintf("%s; charset=%s", c.MediaType(), c.Charset()))

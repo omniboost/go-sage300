@@ -11,6 +11,7 @@ import (
 	null "gopkg.in/guregu/null.v3"
 
 	"github.com/gorilla/schema"
+	"github.com/omniboost/go-sage300/odata"
 )
 
 var (
@@ -79,6 +80,7 @@ func AddURLValuesToRequest(params url.Values, req *http.Request, skipEmpty bool)
 
 	// force $ in query parameters
 	req.URL.RawQuery = strings.Replace(req.URL.RawQuery, "%24", "$", -1)
+	req.URL.RawQuery = strings.Replace(req.URL.RawQuery, "%40", "@", -1)
 	// req.URL.RawQuery = strings.Replace(req.URL.RawQuery, "+", "%20", -1)
 	return nil
 }
@@ -101,6 +103,20 @@ func NewSchemaEncoder() *schema.Encoder {
 		}
 		return strconv.FormatBool(nullBool.Bool)
 	}
+
+	encoder.RegisterEncoder(&odata.Expand{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(&odata.Filter{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(&odata.Select{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(&odata.Top{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(&odata.OrderBy{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(&odata.Skip{}, EncodeSchemaMarshaler)
+
+	encoder.RegisterEncoder(odata.Expand{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(odata.Filter{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(odata.Select{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(odata.Top{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(odata.OrderBy{}, EncodeSchemaMarshaler)
+	encoder.RegisterEncoder(odata.Skip{}, EncodeSchemaMarshaler)
 
 	encoder.RegisterEncoder(null.Float{}, encodeNullFloat)
 	encoder.RegisterEncoder(null.Bool{}, encodeNullBool)

@@ -97,6 +97,8 @@ github.com/google/pprof v0.0.0-20200708004538-1a94d8640e99/go.mod h1:ZgVRPoUq/hf
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 github.com/googleapis/gax-go/v2 v2.0.4/go.mod h1:0Wqv26UfaUD9n4G6kQubkQ+KchISgw+vpHVxEJEs9eg=
 github.com/googleapis/gax-go/v2 v2.0.5/go.mod h1:DWXyrwAJ9X0FpwwEdw+IPEYBICEFu5mhpdKc/us6bOk=
+github.com/gorilla/schema v1.2.0 h1:YufUaxZYCKGFuAq3c96BOhjgd5nmXiOY9NGzF247Tsc=
+github.com/gorilla/schema v1.2.0/go.mod h1:kgLaKoK1FELgZqMAVxx/5cbj0kT+57qxUrAlIO2eleU=
 github.com/hashicorp/errwrap v1.0.0 h1:hLrqtEDnRye3+sgx6z4qVLNuviH3MR5aQ0ykNJa/UYA=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/go-multierror v1.1.1 h1:H5DkEtf6CXdFp0N0Em5UCwQpXMWke8IA0+lD48awMYo=
@@ -110,8 +112,16 @@ github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+o
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
+github.com/omniboost/schema v0.0.0-20171211162101-9fa3b6af65dc h1:c3Rx0x5ZDkoHBnrvQ7394RDHmgx4nsseVta5NuIv88Y=
+github.com/omniboost/schema v0.0.0-20171211162101-9fa3b6af65dc/go.mod h1:9fjiXyATsFBndd1ZtrF4KJOs/VwBFmhX4N9yblkz+Jg=
+github.com/omniboost/schema v1.1.0 h1:fKi4fFHSS/Dj4Mc3kiYT/6iGdVpWJlYOEItPG3Z0wR4=
+github.com/omniboost/schema v1.1.0/go.mod h1:9fjiXyATsFBndd1ZtrF4KJOs/VwBFmhX4N9yblkz+Jg=
 github.com/omniboost/schema v1.1.1-0.20191030093734-a170fe1a7240 h1:+yAcEWiT5FCKmD9HmerCkxSXRO/9uVQ88gQwvJbt6LA=
 github.com/omniboost/schema v1.1.1-0.20191030093734-a170fe1a7240/go.mod h1:9fjiXyATsFBndd1ZtrF4KJOs/VwBFmhX4N9yblkz+Jg=
+github.com/omniboost/schema v1.1.1-0.20211111143512-9febe6149e5e h1:TK9SAZyE6a5ZBfKRZog6/WgrMx1WoXaQvviGQ9QfACQ=
+github.com/omniboost/schema v1.1.1-0.20211111143512-9febe6149e5e/go.mod h1:p/BKiaWM4vXHpCIdM2HAnmxb+3q95jb2KwvX9bK1OoY=
+github.com/omniboost/schema v1.1.1-0.20211111150515-2e872025e306 h1:9GMWNGwzd6895ErDvWeIipKuaEQ+0l3thaLm89u+El8=
+github.com/omniboost/schema v1.1.1-0.20211111150515-2e872025e306/go.mod h1:p/BKiaWM4vXHpCIdM2HAnmxb+3q95jb2KwvX9bK1OoY=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

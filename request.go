@@ -1,4 +1,4 @@
-package netsuite
+package sage300
 
 import "net/url"
 
