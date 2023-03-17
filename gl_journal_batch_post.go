@@ -3,16 +3,14 @@ package sage300
 import (
 	"net/http"
 	"net/url"
-	"strconv"
 
-	"github.com/omniboost/go-sage300/odata"
 	"github.com/omniboost/go-sage300/utils"
 )
 
 func (c *Client) NewGLJournalBatchPostRequest() GLJournalBatchPostRequest {
 	r := GLJournalBatchPostRequest{
 		client:  c,
-		method:  http.MethodGet,
+		method:  http.MethodPost,
 		headers: http.Header{},
 	}
 
@@ -32,21 +30,10 @@ type GLJournalBatchPostRequest struct {
 }
 
 func (r GLJournalBatchPostRequest) NewQueryParams() *GLJournalBatchPostRequestQueryParams {
-	selectFields, _ := utils.Fields(&GLAccount{})
-	return &GLJournalBatchPostRequestQueryParams{
-		Select: odata.NewSelect(selectFields),
-		Filter: odata.NewFilter(),
-		Top:    odata.NewTop(),
-		Skip:   odata.NewSkip(),
-	}
+	return &GLJournalBatchPostRequestQueryParams{}
 }
 
 type GLJournalBatchPostRequestQueryParams struct {
-	// @TODO: check if this an OData struct or something
-	Select *odata.Select `schema:"$select,omitempty"`
-	Filter *odata.Filter `schema:"$filter,omitempty"`
-	Top    *odata.Top    `schema:"$top,omitempty"`
-	Skip   *odata.Skip   `schema:"$skip,omitempty"`
 }
 
 func (p GLJournalBatchPostRequestQueryParams) ToURLValues() (url.Values, error) {
@@ -99,14 +86,15 @@ func (r GLJournalBatchPostRequest) NewRequestBody() GLJournalBatchPostRequestBod
 }
 
 type GLJournalBatchPostRequestBody struct {
+	GLJournalBatch
 }
 
 func (r *GLJournalBatchPostRequest) RequestBody() *GLJournalBatchPostRequestBody {
-	return nil
+	return &r.requestBody
 }
 
 func (r *GLJournalBatchPostRequest) RequestBodyInterface() interface{} {
-	return nil
+	return r.requestBody
 }
 
 func (r *GLJournalBatchPostRequest) SetRequestBody(body GLJournalBatchPostRequestBody) {
@@ -124,7 +112,7 @@ type GLJournalBatchPostResponseBody struct {
 }
 
 func (r *GLJournalBatchPostRequest) URL() (*url.URL, error) {
-	u, err := r.client.GetEndpointURL("/v{{.api_version}}/{{.tenant_id}}/{{.company_id}}/GL/GLAccounts", r.PathParams())
+	u, err := r.client.GetEndpointURL("/v{{.api_version}}/{{.tenant_id}}/{{.company_id}}/GL/GLJournalBatches", r.PathParams())
 	return &u, err
 }
 
@@ -144,36 +132,4 @@ func (r *GLJournalBatchPostRequest) Do() (GLJournalBatchPostResponseBody, error)
 	responseBody := r.NewResponseBody()
 	_, err = r.client.Do(req, responseBody)
 	return *responseBody, err
-}
-
-func (r *GLJournalBatchPostRequest) All() (GLJournalBatchPostResponseBody, error) {
-	resp, err := r.Do()
-	if err != nil {
-		return resp, err
-	}
-
-	concat := resp.Value
-
-	for resp.OdataNextLink != "" {
-		u, err := url.Parse(resp.OdataNextLink)
-		if err != nil {
-			return resp, err
-		}
-
-		skip, err := strconv.Atoi(u.Query().Get("$skip"))
-		if err != nil {
-			return resp, err
-		}
-
-		r.QueryParams().Skip.Set(skip)
-		resp, err = r.Do()
-		if err != nil {
-			return resp, err
-		}
-
-		concat = append(concat, resp.Value...)
-	}
-
-	resp.Value = concat
-	return resp, nil
 }

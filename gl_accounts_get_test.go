@@ -2,7 +2,7 @@ package sage300_test
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"testing"
 )
 
@@ -14,5 +14,5 @@ func TestGLAccountsGet(t *testing.T) {
 	}
 
 	b, _ := json.MarshalIndent(resp, "", "  ")
-	log.Println(string(b))
+	fmt.Println(string(b))
 }

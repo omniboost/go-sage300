@@ -1,12 +1,14 @@
 package sage300
 
-import "time"
+import (
+	"github.com/omniboost/go-sage300/omitempty"
+)
 
 type GLAccounts []GLAccount
 
 type GLAccount struct {
 	UnformattedAccount             string        `json:"UnformattedAccount"`
-	DateCreated                    time.Time     `json:"DateCreated"`
+	DateCreated                    Time          `json:"DateCreated"`
 	Description                    string        `json:"Description"`
 	AccountType                    string        `json:"AccountType"`
 	NormalBalanceDRCR              string        `json:"NormalBalanceDRCR"`
@@ -101,7 +103,7 @@ type GLAccount struct {
 		IntegerValue             int         `json:"IntegerValue"`
 		YesNoValue               bool        `json:"YesNoValue"`
 		DateValue                interface{} `json:"DateValue"`
-		TimeValue                time.Time   `json:"TimeValue"`
+		TimeValue                Time        `json:"TimeValue"`
 		OptionalFieldDescription string      `json:"OptionalFieldDescription"`
 		ValueDescription         string      `json:"ValueDescription"`
 		UpdateOperation          string      `json:"UpdateOperation"`
@@ -135,440 +137,468 @@ type TaxRate struct {
 type TaxGroups []TaxGroup
 
 type TaxGroup struct {
-	TaxGroupKey          string    `json:"TaxGroupKey"`
-	TransactionType      string    `json:"TransactionType"`
-	Description          string    `json:"Description"`
-	TaxReportingCurrency string    `json:"TaxReportingCurrency"`
-	TaxAuthority1        string    `json:"TaxAuthority1"`
-	TaxAuthority2        string    `json:"TaxAuthority2"`
-	TaxAuthority3        string    `json:"TaxAuthority3"`
-	TaxAuthority4        string    `json:"TaxAuthority4"`
-	TaxAuthority5        string    `json:"TaxAuthority5"`
-	Taxable1             bool      `json:"Taxable1"`
-	Taxable2             bool      `json:"Taxable2"`
-	Taxable3             bool      `json:"Taxable3"`
-	Taxable4             bool      `json:"Taxable4"`
-	Taxable5             bool      `json:"Taxable5"`
-	TaxCalculationMethod string    `json:"TaxCalculationMethod"`
-	LastMaintained       time.Time `json:"LastMaintained"`
-	Surtax1              bool      `json:"Surtax1"`
-	Surtax2              bool      `json:"Surtax2"`
-	Surtax3              bool      `json:"Surtax3"`
-	Surtax4              bool      `json:"Surtax4"`
-	Surtax5              bool      `json:"Surtax5"`
-	SurtaxOnAuthority1   string    `json:"SurtaxOnAuthority1"`
-	SurtaxOnAuthority2   string    `json:"SurtaxOnAuthority2"`
-	SurtaxOnAuthority3   string    `json:"SurtaxOnAuthority3"`
-	SurtaxOnAuthority4   string    `json:"SurtaxOnAuthority4"`
-	SurtaxOnAuthority5   string    `json:"SurtaxOnAuthority5"`
-	TaxReportingRateType string    `json:"TaxReportingRateType"`
-	UpdateOperation      string    `json:"UpdateOperation"`
+	TaxGroupKey          string `json:"TaxGroupKey"`
+	TransactionType      string `json:"TransactionType"`
+	Description          string `json:"Description"`
+	TaxReportingCurrency string `json:"TaxReportingCurrency"`
+	TaxAuthority1        string `json:"TaxAuthority1"`
+	TaxAuthority2        string `json:"TaxAuthority2"`
+	TaxAuthority3        string `json:"TaxAuthority3"`
+	TaxAuthority4        string `json:"TaxAuthority4"`
+	TaxAuthority5        string `json:"TaxAuthority5"`
+	Taxable1             bool   `json:"Taxable1"`
+	Taxable2             bool   `json:"Taxable2"`
+	Taxable3             bool   `json:"Taxable3"`
+	Taxable4             bool   `json:"Taxable4"`
+	Taxable5             bool   `json:"Taxable5"`
+	TaxCalculationMethod string `json:"TaxCalculationMethod"`
+	LastMaintained       Time   `json:"LastMaintained"`
+	Surtax1              bool   `json:"Surtax1"`
+	Surtax2              bool   `json:"Surtax2"`
+	Surtax3              bool   `json:"Surtax3"`
+	Surtax4              bool   `json:"Surtax4"`
+	Surtax5              bool   `json:"Surtax5"`
+	SurtaxOnAuthority1   string `json:"SurtaxOnAuthority1"`
+	SurtaxOnAuthority2   string `json:"SurtaxOnAuthority2"`
+	SurtaxOnAuthority3   string `json:"SurtaxOnAuthority3"`
+	SurtaxOnAuthority4   string `json:"SurtaxOnAuthority4"`
+	SurtaxOnAuthority5   string `json:"SurtaxOnAuthority5"`
+	TaxReportingRateType string `json:"TaxReportingRateType"`
+	UpdateOperation      string `json:"UpdateOperation"`
 }
 
 type PostedTransactions []PostedTransaction
 
 type PostedTransaction struct {
-	AccountNumber               string    `json:"AccountNumber"`
-	FiscalYear                  string    `json:"FiscalYear"`
-	FiscalPeriod                string    `json:"FiscalPeriod"`
-	SourceCurrencyCode          string    `json:"SourceCurrencyCode"`
-	SourceLedgerCode            string    `json:"SourceLedgerCode"`
-	SourceTypeCode              string    `json:"SourceTypeCode"`
-	PostingSequenceNumber       int       `json:"PostingSequenceNumber"`
-	DetailCount                 int       `json:"DetailCount"`
-	JournalDate                 time.Time `json:"JournalDate"`
-	BatchNumber                 string    `json:"BatchNumber"`
-	JournalEntryNumber          string    `json:"JournalEntryNumber"`
-	JournalTransactionNumber    int       `json:"JournalTransactionNumber"`
-	ConsolidationOccurredOnPost string    `json:"ConsolidationOccurredOnPost"`
-	CompanyID                   string    `json:"CompanyID"`
-	JournalDetailDescription    string    `json:"JournalDetailDescription"`
-	JournalDetailReference      string    `json:"JournalDetailReference"`
-	JournalTransactionAmount    float64   `json:"JournalTransactionAmount"`
-	JournalTransactionQuantity  float64   `json:"JournalTransactionQuantity"`
-	NbrOfSourceCurrencyDecimals string    `json:"NbrOfSourceCurrencyDecimals"`
-	SourceCurrencyAmount        float64   `json:"SourceCurrencyAmount"`
-	HomeCurrencyCode            string    `json:"HomeCurrencyCode"`
-	CurrencyRateTableType       string    `json:"CurrencyRateTableType"`
-	SCURNCODE                   string    `json:"SCURNCODE"`
-	DateOfCurrencyRateSelected  time.Time `json:"DateOfCurrencyRateSelected"`
-	CurrencyRateForConversion   int       `json:"CurrencyRateForConversion"`
-	CurrencyRateSpreadAllowed   float64   `json:"CurrencyRateSpreadAllowed"`
-	CodeForRateDateMatching     string    `json:"CodeForRateDateMatching"`
-	CurrencyRateOperator        string    `json:"CurrencyRateOperator"`
-	DrillDownType               int       `json:"DrillDownType"`
-	DrillDownLinkNumber         int       `json:"DrillDownLinkNumber"`
-	DrillDownApplicationSource  string    `json:"DrillDownApplicationSource"`
-	ReportCurrencyAmount        float64   `json:"ReportCurrencyAmount"`
-	NumberOfOptionalFields      int       `json:"NumberOfOptionalFields"`
-	DocumentDate                time.Time `json:"DocumentDate"`
-	TaxReportingStatus          int       `json:"TaxReportingStatus"`
-	TaxAuthority                string    `json:"TaxAuthority"`
-	TaxAccountType              string    `json:"TaxAccountType"`
-	UpdateOperation             string    `json:"UpdateOperation"`
+	AccountNumber               string  `json:"AccountNumber"`
+	FiscalYear                  string  `json:"FiscalYear"`
+	FiscalPeriod                string  `json:"FiscalPeriod"`
+	SourceCurrencyCode          string  `json:"SourceCurrencyCode"`
+	SourceLedgerCode            string  `json:"SourceLedgerCode"`
+	SourceTypeCode              string  `json:"SourceTypeCode"`
+	PostingSequenceNumber       int     `json:"PostingSequenceNumber"`
+	DetailCount                 int     `json:"DetailCount"`
+	JournalDate                 Time    `json:"JournalDate"`
+	BatchNumber                 string  `json:"BatchNumber"`
+	JournalEntryNumber          string  `json:"JournalEntryNumber"`
+	JournalTransactionNumber    int     `json:"JournalTransactionNumber"`
+	ConsolidationOccurredOnPost string  `json:"ConsolidationOccurredOnPost"`
+	CompanyID                   string  `json:"CompanyID"`
+	JournalDetailDescription    string  `json:"JournalDetailDescription"`
+	JournalDetailReference      string  `json:"JournalDetailReference"`
+	JournalTransactionAmount    float64 `json:"JournalTransactionAmount"`
+	JournalTransactionQuantity  float64 `json:"JournalTransactionQuantity"`
+	NbrOfSourceCurrencyDecimals string  `json:"NbrOfSourceCurrencyDecimals"`
+	SourceCurrencyAmount        float64 `json:"SourceCurrencyAmount"`
+	HomeCurrencyCode            string  `json:"HomeCurrencyCode"`
+	CurrencyRateTableType       string  `json:"CurrencyRateTableType"`
+	SCURNCODE                   string  `json:"SCURNCODE"`
+	DateOfCurrencyRateSelected  Time    `json:"DateOfCurrencyRateSelected"`
+	CurrencyRateForConversion   int     `json:"CurrencyRateForConversion"`
+	CurrencyRateSpreadAllowed   float64 `json:"CurrencyRateSpreadAllowed"`
+	CodeForRateDateMatching     string  `json:"CodeForRateDateMatching"`
+	CurrencyRateOperator        string  `json:"CurrencyRateOperator"`
+	DrillDownType               int     `json:"DrillDownType"`
+	DrillDownLinkNumber         int     `json:"DrillDownLinkNumber"`
+	DrillDownApplicationSource  string  `json:"DrillDownApplicationSource"`
+	ReportCurrencyAmount        float64 `json:"ReportCurrencyAmount"`
+	NumberOfOptionalFields      int     `json:"NumberOfOptionalFields"`
+	DocumentDate                Time    `json:"DocumentDate"`
+	TaxReportingStatus          int     `json:"TaxReportingStatus"`
+	TaxAuthority                string  `json:"TaxAuthority"`
+	TaxAccountType              string  `json:"TaxAccountType"`
+	UpdateOperation             string  `json:"UpdateOperation"`
 }
 
 type PostingJournalDetails []PostingJournalDetail
 
 type PostingJournalDetail struct {
-	Postingsequencenumber       int       `json:"Postingsequencenumber"`
-	BatchNumber                 string    `json:"BatchNumber"`
-	Journalentrynumber          string    `json:"Journalentrynumber"`
-	Journaltransactionnumber    int       `json:"Journaltransactionnumber"`
-	Journaldate                 time.Time `json:"Journaldate"`
-	Fiscalyear                  string    `json:"Fiscalyear"`
-	Fiscalperiod                string    `json:"Fiscalperiod"`
-	SourceLedgerCode            string    `json:"SourceLedgerCode"`
-	SourceTypeCode              string    `json:"SourceTypeCode"`
-	ConsolidationoccurredOnpost string    `json:"ConsolidationoccurredOnpost"`
-	AccountNumber               string    `json:"AccountNumber"`
-	CompanyID                   string    `json:"CompanyID"`
-	Journaldetaildescription    string    `json:"Journaldetaildescription"`
-	Journaldetailreference      string    `json:"Journaldetailreference"`
-	Journaltransactionamount    float64   `json:"Journaltransactionamount"`
-	Journaltransactionquantity  float64   `json:"Journaltransactionquantity"`
-	NbrOfsourcecurrencydecimals string    `json:"NbrOfsourcecurrencydecimals"`
-	Sourcecurrencyamount        float64   `json:"Sourcecurrencyamount"`
-	Homecurrencycode            string    `json:"Homecurrencycode"`
-	Currencyratetabletype       string    `json:"Currencyratetabletype"`
-	Sourcecurrencycode          string    `json:"Sourcecurrencycode"`
-	DateOfcurrencyrateselected  time.Time `json:"DateOfcurrencyrateselected"`
-	CurrencyrateForconversion   int       `json:"CurrencyrateForconversion"`
-	Currencyratespreadallowed   float64   `json:"Currencyratespreadallowed"`
-	CodeForratedatematching     string    `json:"CodeForratedatematching"`
-	Currencyrateoperator        string    `json:"Currencyrateoperator"`
-	Printedstatuscode           string    `json:"Printedstatuscode"`
-	PostingDate                 time.Time `json:"PostingDate"`
-	Reportcurrencyamount        float64   `json:"Reportcurrencyamount"`
-	NumberOfOptionalFields      int       `json:"NumberOfOptionalFields"`
-	Originator                  string    `json:"Originator"`
-	AutoReversal                string    `json:"AutoReversal"`
-	Destination                 string    `json:"Destination"`
-	RouteNumber                 int       `json:"RouteNumber"`
-	DocumentDate                time.Time `json:"DocumentDate"`
-	TaxAuthority                string    `json:"TaxAuthority"`
-	TaxAccountType              string    `json:"TaxAccountType"`
-	UpdateOperation             string    `json:"UpdateOperation"`
+	Postingsequencenumber       int     `json:"Postingsequencenumber,omitempty"`
+	BatchNumber                 string  `json:"BatchNumber,omitempty"`
+	Journalentrynumber          string  `json:"Journalentrynumber,omitempty"`
+	Journaltransactionnumber    int     `json:"Journaltransactionnumber,omitempty"`
+	Journaldate                 Time    `json:"Journaldate,omitempty"`
+	Fiscalyear                  string  `json:"Fiscalyear,omitempty"`
+	Fiscalperiod                string  `json:"Fiscalperiod,omitempty"`
+	SourceLedgerCode            string  `json:"SourceLedgerCode,omitempty"`
+	SourceTypeCode              string  `json:"SourceTypeCode,omitempty"`
+	ConsolidationoccurredOnpost string  `json:"ConsolidationoccurredOnpost,omitempty"`
+	AccountNumber               string  `json:"AccountNumber,omitempty"`
+	CompanyID                   string  `json:"CompanyID,omitempty"`
+	Journaldetaildescription    string  `json:"Journaldetaildescription,omitempty"`
+	Journaldetailreference      string  `json:"Journaldetailreference,omitempty"`
+	Journaltransactionamount    float64 `json:"Journaltransactionamount,omitempty"`
+	Journaltransactionquantity  float64 `json:"Journaltransactionquantity,omitempty"`
+	NbrOfsourcecurrencydecimals string  `json:"NbrOfsourcecurrencydecimals,omitempty"`
+	Sourcecurrencyamount        float64 `json:"Sourcecurrencyamount,omitempty"`
+	Homecurrencycode            string  `json:"Homecurrencycode,omitempty"`
+	Currencyratetabletype       string  `json:"Currencyratetabletype,omitempty"`
+	Sourcecurrencycode          string  `json:"Sourcecurrencycode,omitempty"`
+	DateOfcurrencyrateselected  Time    `json:"DateOfcurrencyrateselected,omitempty"`
+	CurrencyrateForconversion   int     `json:"CurrencyrateForconversion,omitempty"`
+	Currencyratespreadallowed   float64 `json:"Currencyratespreadallowed,omitempty"`
+	CodeForratedatematching     string  `json:"CodeForratedatematching,omitempty"`
+	Currencyrateoperator        string  `json:"Currencyrateoperator,omitempty"`
+	Printedstatuscode           string  `json:"Printedstatuscode,omitempty"`
+	PostingDate                 Time    `json:"PostingDate,omitempty"`
+	Reportcurrencyamount        float64 `json:"Reportcurrencyamount,omitempty"`
+	NumberOfOptionalFields      int     `json:"NumberOfOptionalFields,omitempty"`
+	Originator                  string  `json:"Originator,omitempty"`
+	AutoReversal                string  `json:"AutoReversal,omitempty"`
+	Destination                 string  `json:"Destination,omitempty"`
+	RouteNumber                 int     `json:"RouteNumber,omitempty"`
+	DocumentDate                Time    `json:"DocumentDate,omitempty"`
+	TaxAuthority                string  `json:"TaxAuthority,omitempty"`
+	TaxAccountType              string  `json:"TaxAccountType,omitempty"`
+	UpdateOperation             string  `json:"UpdateOperation,omitempty"`
+}
+
+func (d PostingJournalDetail) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(d)
 }
 
 type GLJournalBatch struct {
-	BatchNumber                      string    `json:"BatchNumber"`
-	ActiveSwitch                     string    `json:"ActiveSwitch"`
-	Description                      string    `json:"Description"`
-	SourceLedger                     string    `json:"SourceLedger"`
-	DateCreated                      time.Time `json:"DateCreated"`
-	DateLastEdited                   time.Time `json:"DateLastEdited"`
-	JournalBatchType                 string    `json:"JournalBatchType"`
-	Status                           string    `json:"Status"`
-	PostingSequence                  int       `json:"PostingSequence"`
-	Debits                           int       `json:"Debits"`
-	Credits                          int       `json:"Credits"`
-	QuantityTotal                    int       `json:"QuantityTotal"`
-	NumberOfEntries                  int       `json:"NumberOfEntries"`
-	NextEntryNumber                  int       `json:"NextEntryNumber"`
-	NumberOfErrors                   int       `json:"NumberOfErrors"`
-	OriginalStatus                   string    `json:"OriginalStatus"`
-	Printed                          string    `json:"Printed"`
-	ICTRelated                       string    `json:"ICTRelated"`
-	RevaluationRecognizedBatch       string    `json:"RevaluationRecognizedBatch"`
-	EligibleForEditSwitch            string    `json:"EligibleForEditSwitch"`
-	EligibleForDeleteSwitch          string    `json:"EligibleForDeleteSwitch"`
-	EligibleForPostingSwitch         string    `json:"EligibleForPostingSwitch"`
-	EligibleForPrintingSwitch        string    `json:"EligibleForPrintingSwitch"`
-	EligibleForProvisionalPostSwitch string    `json:"EligibleForProvisionalPostSwitch"`
-	ReadyToPost                      string    `json:"ReadyToPost"`
-	LockBatchSwitch                  string    `json:"LockBatchSwitch"`
-	JournalHeaders                   []struct {
-		BatchNumber                    string    `json:"BatchNumber"`
-		EntryNumber                    string    `json:"EntryNumber"`
-		Originator                     string    `json:"Originator"`
-		SourceLedger                   string    `json:"SourceLedger"`
-		SourceType                     string    `json:"SourceType"`
-		FiscalYear                     string    `json:"FiscalYear"`
-		FiscalPeriod                   string    `json:"FiscalPeriod"`
-		AutoReversal                   string    `json:"AutoReversal"`
-		Description                    string    `json:"Description"`
-		Debits                         int       `json:"Debits"`
-		Credits                        int       `json:"Credits"`
-		Quantity                       int       `json:"Quantity"`
-		PostingDate                    time.Time `json:"PostingDate"`
-		DrillDownType                  int       `json:"DrillDownType"`
-		DrillDownLinkNumber            int       `json:"DrillDownLinkNumber"`
-		DrillDownApplicationSource     string    `json:"DrillDownApplicationSource"`
-		OutOfBalanceBy                 int       `json:"OutOfBalanceBy"`
-		SpecificReversalYear           string    `json:"SpecificReversalYear"`
-		SpecificReversalPeriod         string    `json:"SpecificReversalPeriod"`
-		ErrorBatch                     int       `json:"ErrorBatch"`
-		ErrorEntry                     int       `json:"ErrorEntry"`
-		NumberOfDetails                int       `json:"NumberOfDetails"`
-		Processswitches                string    `json:"Processswitches"`
-		EnteredBy                      string    `json:"EnteredBy"`
-		DocumentDate                   time.Time `json:"DocumentDate"`
-		OrigExists                     int       `json:"OrigExists"`
-		OrigDescription                string    `json:"OrigDescription"`
-		OrigStatus                     int       `json:"OrigStatus"`
-		OrigMulticurrencySwitch        int       `json:"OrigMulticurrencySwitch"`
-		OrigHomeCurrency               string    `json:"OrigHomeCurrency"`
-		OrigHomeCurrencyDecimals       int       `json:"OrigHomeCurrencyDecimals"`
-		OrigQtySwitch                  int       `json:"OrigQtySwitch"`
-		OrigQtyDecimals                int       `json:"OrigQtyDecimals"`
-		SourceCodeExists               int       `json:"SourceCodeExists"`
-		SourceCodeDescription          string    `json:"SourceCodeDescription"`
-		TaxGroup                       string    `json:"TaxGroup"`
-		EntryType                      string    `json:"EntryType"`
-		DoNotCalculationTax            string    `json:"DoNotCalculationTax"`
-		CustomerVendorNumber           string    `json:"CustomerVendorNumber"`
-		DocumentType                   string    `json:"DocumentType"`
-		DocumentNumber                 string    `json:"DocumentNumber"`
-		TaxAuthority1                  string    `json:"TaxAuthority1"`
-		TaxAuthority2                  string    `json:"TaxAuthority2"`
-		TaxAuthority3                  string    `json:"TaxAuthority3"`
-		TaxAuthority4                  string    `json:"TaxAuthority4"`
-		TaxAuthority5                  string    `json:"TaxAuthority5"`
-		TaxVendorClass1                int       `json:"TaxVendorClass1"`
-		TaxVendorClass2                int       `json:"TaxVendorClass2"`
-		TaxVendorClass3                int       `json:"TaxVendorClass3"`
-		TaxVendorClass4                int       `json:"TaxVendorClass4"`
-		TaxVendorClass5                int       `json:"TaxVendorClass5"`
-		TaxItemClass1                  int       `json:"TaxItemClass1"`
-		TaxItemClass2                  int       `json:"TaxItemClass2"`
-		TaxItemClass3                  int       `json:"TaxItemClass3"`
-		TaxItemClass4                  int       `json:"TaxItemClass4"`
-		TaxItemClass5                  int       `json:"TaxItemClass5"`
-		TaxBaseAmount1                 int       `json:"TaxBaseAmount1"`
-		TaxBaseAmount2                 int       `json:"TaxBaseAmount2"`
-		TaxBaseAmount3                 int       `json:"TaxBaseAmount3"`
-		TaxBaseAmount4                 int       `json:"TaxBaseAmount4"`
-		TaxBaseAmount5                 int       `json:"TaxBaseAmount5"`
-		TaxAmount1                     int       `json:"TaxAmount1"`
-		TaxAmount2                     int       `json:"TaxAmount2"`
-		TaxAmount3                     int       `json:"TaxAmount3"`
-		TaxAmount4                     int       `json:"TaxAmount4"`
-		TaxAmount5                     int       `json:"TaxAmount5"`
-		TaxExpenseAmount1              int       `json:"TaxExpenseAmount1"`
-		TaxExpenseAmount2              int       `json:"TaxExpenseAmount2"`
-		TaxExpenseAmount3              int       `json:"TaxExpenseAmount3"`
-		TaxExpenseAmount4              int       `json:"TaxExpenseAmount4"`
-		TaxExpenseAmount5              int       `json:"TaxExpenseAmount5"`
-		TaxRecoverableAmount1          int       `json:"TaxRecoverableAmount1"`
-		TaxRecoverableAmount2          int       `json:"TaxRecoverableAmount2"`
-		TaxRecoverableAmount3          int       `json:"TaxRecoverableAmount3"`
-		TaxRecoverableAmount4          int       `json:"TaxRecoverableAmount4"`
-		TaxRecoverableAmount5          int       `json:"TaxRecoverableAmount5"`
-		TaxAllocatedAmount1            int       `json:"TaxAllocatedAmount1"`
-		TaxAllocatedAmount2            int       `json:"TaxAllocatedAmount2"`
-		TaxAllocatedAmount3            int       `json:"TaxAllocatedAmount3"`
-		TaxAllocatedAmount4            int       `json:"TaxAllocatedAmount4"`
-		TaxAllocatedAmount5            int       `json:"TaxAllocatedAmount5"`
-		TaxReportingAmount1            int       `json:"TaxReportingAmount1"`
-		TaxReportingAmount2            int       `json:"TaxReportingAmount2"`
-		TaxReportingAmount3            int       `json:"TaxReportingAmount3"`
-		TaxReportingAmount4            int       `json:"TaxReportingAmount4"`
-		TaxReportingAmount5            int       `json:"TaxReportingAmount5"`
-		TaxReportingExpensed1          int       `json:"TaxReportingExpensed1"`
-		TaxReportingExpensed2          int       `json:"TaxReportingExpensed2"`
-		TaxReportingExpensed3          int       `json:"TaxReportingExpensed3"`
-		TaxReportingExpensed4          int       `json:"TaxReportingExpensed4"`
-		TaxReportingExpensed5          int       `json:"TaxReportingExpensed5"`
-		TaxReportingRecoverableAmount1 int       `json:"TaxReportingRecoverableAmount1"`
-		TaxReportingRecoverableAmount2 int       `json:"TaxReportingRecoverableAmount2"`
-		TaxReportingRecoverableAmount3 int       `json:"TaxReportingRecoverableAmount3"`
-		TaxReportingRecoverableAmount4 int       `json:"TaxReportingRecoverableAmount4"`
-		TaxReportingRecoverableAmount5 int       `json:"TaxReportingRecoverableAmount5"`
-		TaxReportingAllocatedAmount1   int       `json:"TaxReportingAllocatedAmount1"`
-		TaxReportingAllocatedAmount2   int       `json:"TaxReportingAllocatedAmount2"`
-		TaxReportingAllocatedAmount3   int       `json:"TaxReportingAllocatedAmount3"`
-		TaxReportingAllocatedAmount4   int       `json:"TaxReportingAllocatedAmount4"`
-		TaxReportingAllocatedAmount5   int       `json:"TaxReportingAllocatedAmount5"`
-		TaxReportingCurrencyCode       string    `json:"TaxReportingCurrencyCode"`
-		TaxReportingRate               int       `json:"TaxReportingRate"`
-		TaxReportingRateType           string    `json:"TaxReportingRateType"`
-		TaxReportingRateDate           time.Time `json:"TaxReportingRateDate"`
-		TaxReportingRateOperation      string    `json:"TaxReportingRateOperation"`
-		TaxExpenseAccount1             string    `json:"TaxExpenseAccount1"`
-		TaxExpenseAccount2             string    `json:"TaxExpenseAccount2"`
-		TaxExpenseAccount3             string    `json:"TaxExpenseAccount3"`
-		TaxExpenseAccount4             string    `json:"TaxExpenseAccount4"`
-		TaxExpenseAccount5             string    `json:"TaxExpenseAccount5"`
-		TaxRecoverableAccount1         string    `json:"TaxRecoverableAccount1"`
-		TaxRecoverableAccount2         string    `json:"TaxRecoverableAccount2"`
-		TaxRecoverableAccount3         string    `json:"TaxRecoverableAccount3"`
-		TaxRecoverableAccount4         string    `json:"TaxRecoverableAccount4"`
-		TaxRecoverableAccount5         string    `json:"TaxRecoverableAccount5"`
-		TaxRate1                       int       `json:"TaxRate1"`
-		TaxRate2                       int       `json:"TaxRate2"`
-		TaxRate3                       int       `json:"TaxRate3"`
-		TaxRate4                       int       `json:"TaxRate4"`
-		TaxRate5                       int       `json:"TaxRate5"`
-		FunctionalTaxAmount1           int       `json:"FunctionalTaxAmount1"`
-		FunctionalTaxAmount2           int       `json:"FunctionalTaxAmount2"`
-		FunctionalTaxAmount3           int       `json:"FunctionalTaxAmount3"`
-		FunctionalTaxAmount4           int       `json:"FunctionalTaxAmount4"`
-		FunctionalTaxAmount5           int       `json:"FunctionalTaxAmount5"`
-		FunctionalTaxBaseAmount1       int       `json:"FunctionalTaxBaseAmount1"`
-		FunctionalTaxBaseAmount2       int       `json:"FunctionalTaxBaseAmount2"`
-		FunctionalTaxBaseAmount3       int       `json:"FunctionalTaxBaseAmount3"`
-		FunctionalTaxBaseAmount4       int       `json:"FunctionalTaxBaseAmount4"`
-		FunctionalTaxBaseAmount5       int       `json:"FunctionalTaxBaseAmount5"`
-		FunctionalExpensedAmount1      int       `json:"FunctionalExpensedAmount1"`
-		FunctionalExpensedAmount2      int       `json:"FunctionalExpensedAmount2"`
-		FunctionalExpensedAmount3      int       `json:"FunctionalExpensedAmount3"`
-		FunctionalExpensedAmount4      int       `json:"FunctionalExpensedAmount4"`
-		FunctionalExpensedAmount5      int       `json:"FunctionalExpensedAmount5"`
-		FunctionalRecoverableAmount1   int       `json:"FunctionalRecoverableAmount1"`
-		FunctionalRecoverableAmount2   int       `json:"FunctionalRecoverableAmount2"`
-		FunctionalRecoverableAmount3   int       `json:"FunctionalRecoverableAmount3"`
-		FunctionalRecoverableAmount4   int       `json:"FunctionalRecoverableAmount4"`
-		FunctionalRecoverableAmount5   int       `json:"FunctionalRecoverableAmount5"`
-		FunctionalAllocatedAmount1     int       `json:"FunctionalAllocatedAmount1"`
-		FunctionalAllocatedAmount2     int       `json:"FunctionalAllocatedAmount2"`
-		FunctionalAllocatedAmount3     int       `json:"FunctionalAllocatedAmount3"`
-		FunctionalAllocatedAmount4     int       `json:"FunctionalAllocatedAmount4"`
-		FunctionalAllocatedAmount5     int       `json:"FunctionalAllocatedAmount5"`
-		InvoicetotalInTaxGroupCurre    int       `json:"InvoicetotalInTaxGroupCurre"`
-		InvoicetotalInfunctionalCurr   int       `json:"InvoicetotalInfunctionalCurr"`
-		TaxGroupDescription            string    `json:"TaxGroupDescription"`
-		TaxAuthorityDescription1       string    `json:"TaxAuthorityDescription1"`
-		TaxAuthorityDescription2       string    `json:"TaxAuthorityDescription2"`
-		TaxAuthorityDescription3       string    `json:"TaxAuthorityDescription3"`
-		TaxAuthorityDescription4       string    `json:"TaxAuthorityDescription4"`
-		TaxAuthorityDescription5       string    `json:"TaxAuthorityDescription5"`
-		TaxReportingCurrencyCodeDesc   string    `json:"TaxReportingCurrencyCodeDesc"`
-		RateTypeDescription            string    `json:"RateTypeDescription"`
-		CustomerVendorName             string    `json:"CustomerVendorName"`
-		JournalDetails                 []struct {
-			BatchNumber                  string    `json:"BatchNumber"`
-			EntryNumber                  string    `json:"EntryNumber"`
-			TransactionNumber            string    `json:"TransactionNumber"`
-			Destination                  string    `json:"Destination"`
-			RouteNumber                  int       `json:"RouteNumber"`
-			AccountNumber                string    `json:"AccountNumber"`
-			CompanyID                    string    `json:"CompanyID"`
-			Amount                       int       `json:"Amount"`
-			Quantity                     int       `json:"Quantity"`
-			SourceCurrencyDecimals       string    `json:"SourceCurrencyDecimals"`
-			SourceCurrencyAmount         int       `json:"SourceCurrencyAmount"`
-			HomeCurrency                 string    `json:"HomeCurrency"`
-			CurrencyRateTable            string    `json:"CurrencyRateTable"`
-			SourceCurrency               string    `json:"SourceCurrency"`
-			CurrencyRateDate             time.Time `json:"CurrencyRateDate"`
-			CurrencyRate                 int       `json:"CurrencyRate"`
-			CurrencyRateSpread           int       `json:"CurrencyRateSpread"`
-			CurrencyRateDateMatching     string    `json:"CurrencyRateDateMatching"`
-			CurrencyRateOperator         string    `json:"CurrencyRateOperator"`
-			Description                  string    `json:"Description"`
-			Reference                    string    `json:"Reference"`
-			JournalDate                  time.Time `json:"JournalDate"`
-			SourceLedger                 string    `json:"SourceLedger"`
-			SourceType                   string    `json:"SourceType"`
-			Comment                      string    `json:"Comment"`
-			NumberOfOptionalFields       int       `json:"NumberOfOptionalFields"`
-			Processswitches              string    `json:"Processswitches"`
-			DestExists                   int       `json:"DestExists"`
-			DestDescription              string    `json:"DestDescription"`
-			DestStatus                   int       `json:"DestStatus"`
-			DestMulticurrencySwitch      int       `json:"DestMulticurrencySwitch"`
-			DestHomeCurrency             string    `json:"DestHomeCurrency"`
-			DestHomeCurrencyDecimals     int       `json:"DestHomeCurrencyDecimals"`
-			DestQtySwitch                int       `json:"DestQtySwitch"`
-			DestQtyDecimals              int       `json:"DestQtyDecimals"`
-			DestOptionalFlds             int       `json:"DestOptionalFlds"`
-			RouteExists                  int       `json:"RouteExists"`
-			RouteDescription             string    `json:"RouteDescription"`
-			RouteStatus                  int       `json:"RouteStatus"`
-			SourceCodeExists             int       `json:"SourceCodeExists"`
-			SourceCodeDescription        string    `json:"SourceCodeDescription"`
-			AcctExists                   int       `json:"AcctExists"`
-			AcctFormatted                string    `json:"AcctFormatted"`
-			AcctDescription              string    `json:"AcctDescription"`
-			AcctStatus                   int       `json:"AcctStatus"`
-			AcctMulticurrencySwitch      int       `json:"AcctMulticurrencySwitch"`
-			AcctSpecificCurrenciesSwitch int       `json:"AcctSpecificCurrenciesSwitch"`
-			AcctControlSwitch            int       `json:"AcctControlSwitch"`
-			AcctQtySwitch                int       `json:"AcctQtySwitch"`
-			AcctOptionalFlds             int       `json:"AcctOptionalFlds"`
-			AcctTransactionOptionalFlds  int       `json:"AcctTransactionOptionalFlds"`
-			AcctUnitOfMeasure            string    `json:"AcctUnitOfMeasure"`
-			TaxAuthority                 string    `json:"TaxAuthority"`
-			TaxAccountType               int       `json:"TaxAccountType"`
-			JournalDetailOptionalFields  []struct {
-				BatchNumber                    string    `json:"BatchNumber"`
-				EntryNumber                    string    `json:"EntryNumber"`
-				TransactionNumber              string    `json:"TransactionNumber"`
-				OptionalField                  string    `json:"OptionalField"`
-				Value                          string    `json:"Value"`
-				JournalDetailOptionalFieldType string    `json:"JournalDetailOptionalFieldType"`
-				Length                         int       `json:"Length"`
-				Decimals                       int       `json:"Decimals"`
-				AllowBlank                     bool      `json:"AllowBlank"`
-				Validate                       bool      `json:"Validate"`
-				ValueSet                       string    `json:"ValueSet"`
-				TypedValueFieldIndex           int       `json:"TypedValueFieldIndex"`
-				TextValue                      string    `json:"TextValue"`
-				AmountValue                    int       `json:"AmountValue"`
-				NumberValue                    int       `json:"NumberValue"`
-				IntegerValue                   int       `json:"IntegerValue"`
-				YesNoValue                     bool      `json:"YesNoValue"`
-				DateValue                      time.Time `json:"DateValue"`
-				TimeValue                      time.Time `json:"TimeValue"`
-				OptionalFieldDescription       string    `json:"OptionalFieldDescription"`
-				ValueDescription               string    `json:"ValueDescription"`
-				UpdateOperation                string    `json:"UpdateOperation"`
-				Warnings                       []struct {
-					Message        string `json:"Message"`
-					Priority       string `json:"Priority"`
-					PriorityString string `json:"PriorityString"`
-					Tag            struct {
-					} `json:"Tag"`
-				} `json:"Warnings"`
-				ETag           string `json:"ETag"`
-				IsDeleted      bool   `json:"IsDeleted"`
-				IsNewLine      bool   `json:"IsNewLine"`
-				HasChanged     bool   `json:"HasChanged"`
-				DisplayIndex   int    `json:"DisplayIndex"`
-				ChangeSequence int    `json:"ChangeSequence"`
-				PreviousKey    string `json:"PreviousKey"`
-				Licenses       struct {
-				} `json:"Licenses"`
-				IsSelected bool `json:"IsSelected"`
-			} `json:"JournalDetailOptionalFields"`
-			UpdateOperation string `json:"UpdateOperation"`
-			Warnings        []struct {
-				Message        string `json:"Message"`
-				Priority       string `json:"Priority"`
-				PriorityString string `json:"PriorityString"`
-				Tag            struct {
-				} `json:"Tag"`
-			} `json:"Warnings"`
-			ETag           string `json:"ETag"`
-			IsDeleted      bool   `json:"IsDeleted"`
-			IsNewLine      bool   `json:"IsNewLine"`
-			HasChanged     bool   `json:"HasChanged"`
-			DisplayIndex   int    `json:"DisplayIndex"`
-			ChangeSequence int    `json:"ChangeSequence"`
-			PreviousKey    string `json:"PreviousKey"`
-			Licenses       struct {
-			} `json:"Licenses"`
-			IsSelected bool `json:"IsSelected"`
-		} `json:"JournalDetails"`
-		UpdateOperation string `json:"UpdateOperation"`
-		Warnings        []struct {
-			Message        string `json:"Message"`
-			Priority       string `json:"Priority"`
-			PriorityString string `json:"PriorityString"`
-			Tag            struct {
-			} `json:"Tag"`
-		} `json:"Warnings"`
-		ETag           string `json:"ETag"`
-		IsDeleted      bool   `json:"IsDeleted"`
-		IsNewLine      bool   `json:"IsNewLine"`
-		HasChanged     bool   `json:"HasChanged"`
-		DisplayIndex   int    `json:"DisplayIndex"`
-		ChangeSequence int    `json:"ChangeSequence"`
-		PreviousKey    string `json:"PreviousKey"`
-		Licenses       struct {
-		} `json:"Licenses"`
-		IsSelected bool `json:"IsSelected"`
-	} `json:"JournalHeaders"`
-	UpdateOperation string `json:"UpdateOperation"`
+	BatchNumber                      string                       `json:"BatchNumber,omitempty"`
+	ActiveSwitch                     string                       `json:"ActiveSwitch,omitempty"`
+	Description                      string                       `json:"Description,omitempty"`
+	SourceLedger                     string                       `json:"SourceLedger,omitempty"`
+	DateCreated                      Time                         `json:"DateCreated,omitempty"`
+	DateLastEdited                   Time                         `json:"DateLastEdited,omitempty"`
+	JournalBatchType                 string                       `json:"JournalBatchType,omitempty"`
+	Status                           string                       `json:"Status,omitempty"`
+	PostingSequence                  int                          `json:"PostingSequence,omitempty"`
+	Debits                           int                          `json:"Debits,omitempty"`
+	Credits                          int                          `json:"Credits,omitempty"`
+	QuantityTotal                    int                          `json:"QuantityTotal,omitempty"`
+	NumberOfEntries                  int                          `json:"NumberOfEntries,omitempty"`
+	NextEntryNumber                  int                          `json:"NextEntryNumber,omitempty"`
+	NumberOfErrors                   int                          `json:"NumberOfErrors,omitempty"`
+	OriginalStatus                   string                       `json:"OriginalStatus,omitempty"`
+	Printed                          string                       `json:"Printed,omitempty"`
+	ICTRelated                       string                       `json:"ICTRelated,omitempty"`
+	RevaluationRecognizedBatch       string                       `json:"RevaluationRecognizedBatch,omitempty"`
+	EligibleForEditSwitch            string                       `json:"EligibleForEditSwitch,omitempty"`
+	EligibleForDeleteSwitch          string                       `json:"EligibleForDeleteSwitch,omitempty"`
+	EligibleForPostingSwitch         string                       `json:"EligibleForPostingSwitch,omitempty"`
+	EligibleForPrintingSwitch        string                       `json:"EligibleForPrintingSwitch,omitempty"`
+	EligibleForProvisionalPostSwitch string                       `json:"EligibleForProvisionalPostSwitch,omitempty"`
+	ReadyToPost                      string                       `json:"ReadyToPost,omitempty"`
+	LockBatchSwitch                  string                       `json:"LockBatchSwitch,omitempty"`
+	JournalHeaders                   GLJournalBatchJournalHeaders `json:"JournalHeaders,omitempty"`
+	UpdateOperation                  string                       `json:"UpdateOperation,omitempty"`
+}
+
+func (b GLJournalBatch) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(b)
+}
+
+type JournalDetails []JournalDetail
+
+// func (d JournalDetails) MarshalJSON() ([]byte, error) {
+// 	return omitempty.MarshalJSON(d)
+// }
+
+type JournalDetail struct {
+	BatchNumber                  string  `json:"BatchNumber,omitempty"`
+	EntryNumber                  string  `json:"EntryNumber,omitempty"`
+	TransactionNumber            string  `json:"TransactionNumber,omitempty"`
+	Destination                  string  `json:"Destination,omitempty"`
+	RouteNumber                  int     `json:"RouteNumber,omitempty"`
+	AccountNumber                string  `json:"AccountNumber,omitempty"`
+	CompanyID                    string  `json:"CompanyID,omitempty"`
+	Amount                       float64 `json:"Amount,omitempty"`
+	Quantity                     int     `json:"Quantity,omitempty"`
+	SourceCurrencyDecimals       string  `json:"SourceCurrencyDecimals,omitempty"`
+	SourceCurrencyAmount         int     `json:"SourceCurrencyAmount,omitempty"`
+	HomeCurrency                 string  `json:"HomeCurrency,omitempty"`
+	CurrencyRateTable            string  `json:"CurrencyRateTable,omitempty"`
+	SourceCurrency               string  `json:"SourceCurrency,omitempty"`
+	CurrencyRateDate             Time    `json:"CurrencyRateDate,omitempty"`
+	CurrencyRate                 int     `json:"CurrencyRate,omitempty"`
+	CurrencyRateSpread           int     `json:"CurrencyRateSpread,omitempty"`
+	CurrencyRateDateMatching     string  `json:"CurrencyRateDateMatching,omitempty"`
+	CurrencyRateOperator         string  `json:"CurrencyRateOperator,omitempty"`
+	Description                  string  `json:"Description,omitempty"`
+	Reference                    string  `json:"Reference,omitempty"`
+	JournalDate                  Time    `json:"JournalDate,omitempty"`
+	SourceLedger                 string  `json:"SourceLedger,omitempty"`
+	SourceType                   string  `json:"SourceType,omitempty"`
+	Comment                      string  `json:"Comment,omitempty"`
+	NumberOfOptionalFields       int     `json:"NumberOfOptionalFields,omitempty"`
+	Processswitches              string  `json:"Processswitches,omitempty"`
+	DestExists                   int     `json:"DestExists,omitempty"`
+	DestDescription              string  `json:"DestDescription,omitempty"`
+	DestStatus                   int     `json:"DestStatus,omitempty"`
+	DestMulticurrencySwitch      int     `json:"DestMulticurrencySwitch,omitempty"`
+	DestHomeCurrency             string  `json:"DestHomeCurrency,omitempty"`
+	DestHomeCurrencyDecimals     int     `json:"DestHomeCurrencyDecimals,omitempty"`
+	DestQtySwitch                int     `json:"DestQtySwitch,omitempty"`
+	DestQtyDecimals              int     `json:"DestQtyDecimals,omitempty"`
+	DestOptionalFlds             int     `json:"DestOptionalFlds,omitempty"`
+	RouteExists                  int     `json:"RouteExists,omitempty"`
+	RouteDescription             string  `json:"RouteDescription,omitempty"`
+	RouteStatus                  int     `json:"RouteStatus,omitempty"`
+	SourceCodeExists             int     `json:"SourceCodeExists,omitempty"`
+	SourceCodeDescription        string  `json:"SourceCodeDescription,omitempty"`
+	AcctExists                   int     `json:"AcctExists,omitempty"`
+	AcctFormatted                string  `json:"AcctFormatted,omitempty"`
+	AcctDescription              string  `json:"AcctDescription,omitempty"`
+	AcctStatus                   int     `json:"AcctStatus,omitempty"`
+	AcctMulticurrencySwitch      int     `json:"AcctMulticurrencySwitch,omitempty"`
+	AcctSpecificCurrenciesSwitch int     `json:"AcctSpecificCurrenciesSwitch,omitempty"`
+	AcctControlSwitch            int     `json:"AcctControlSwitch,omitempty"`
+	AcctQtySwitch                int     `json:"AcctQtySwitch,omitempty"`
+	AcctOptionalFlds             int     `json:"AcctOptionalFlds,omitempty"`
+	AcctTransactionOptionalFlds  int     `json:"AcctTransactionOptionalFlds,omitempty"`
+	AcctUnitOfMeasure            string  `json:"AcctUnitOfMeasure,omitempty"`
+	TaxAuthority                 string  `json:"TaxAuthority,omitempty"`
+	TaxAccountType               int     `json:"TaxAccountType,omitempty"`
+	// JournalDetailOptionalFields  []struct {
+	// 	BatchNumber                    string    `json:"BatchNumber,omitempty"`
+	// 	EntryNumber                    string    `json:"EntryNumber,omitempty"`
+	// 	TransactionNumber              string    `json:"TransactionNumber,omitempty"`
+	// 	OptionalField                  string    `json:"OptionalField,omitempty"`
+	// 	Value                          string    `json:"Value,omitempty"`
+	// 	JournalDetailOptionalFieldType string    `json:"JournalDetailOptionalFieldType,omitempty"`
+	// 	Length                         int       `json:"Length,omitempty"`
+	// 	Decimals                       int       `json:"Decimals,omitempty"`
+	// 	AllowBlank                     bool      `json:"AllowBlank,omitempty"`
+	// 	Validate                       bool      `json:"Validate,omitempty"`
+	// 	ValueSet                       string    `json:"ValueSet,omitempty"`
+	// 	TypedValueFieldIndex           int       `json:"TypedValueFieldIndex,omitempty"`
+	// 	TextValue                      string    `json:"TextValue,omitempty"`
+	// 	AmountValue                    int       `json:"AmountValue,omitempty"`
+	// 	NumberValue                    int       `json:"NumberValue,omitempty"`
+	// 	IntegerValue                   int       `json:"IntegerValue,omitempty"`
+	// 	YesNoValue                     bool      `json:"YesNoValue,omitempty"`
+	// 	DateValue                      Time `json:"DateValue,omitempty"`
+	// 	TimeValue                      Time `json:"TimeValue,omitempty"`
+	// 	OptionalFieldDescription       string    `json:"OptionalFieldDescription,omitempty"`
+	// 	ValueDescription               string    `json:"ValueDescription,omitempty"`
+	// 	UpdateOperation                string    `json:"UpdateOperation,omitempty"`
+	// 	Warnings                       []struct {
+	// 		Message        string `json:"Message,omitempty"`
+	// 		Priority       string `json:"Priority,omitempty"`
+	// 		PriorityString string `json:"PriorityString,omitempty"`
+	// 		Tag            struct {
+	// 		} `json:"Tag,omitempty"`
+	// 	} `json:"Warnings,omitempty"`
+	// 	ETag           string `json:"ETag,omitempty"`
+	// 	IsDeleted      bool   `json:"IsDeleted,omitempty"`
+	// 	IsNewLine      bool   `json:"IsNewLine,omitempty"`
+	// 	HasChanged     bool   `json:"HasChanged,omitempty"`
+	// 	DisplayIndex   int    `json:"DisplayIndex,omitempty"`
+	// 	ChangeSequence int    `json:"ChangeSequence,omitempty"`
+	// 	PreviousKey    string `json:"PreviousKey,omitempty"`
+	// 	Licenses       struct {
+	// 	} `json:"Licenses,omitempty"`
+	// 	IsSelected bool `json:"IsSelected,omitempty"`
+	// } `json:"JournalDetailOptionalFields,omitempty"`
+	UpdateOperation string `json:"UpdateOperation,omitempty"`
+	Warnings        []struct {
+		Message        string `json:"Message,omitempty"`
+		Priority       string `json:"Priority,omitempty"`
+		PriorityString string `json:"PriorityString,omitempty"`
+		Tag            struct {
+		} `json:"Tag,omitempty"`
+	} `json:"Warnings,omitempty"`
+	ETag           string `json:"ETag,omitempty"`
+	IsDeleted      bool   `json:"IsDeleted,omitempty"`
+	IsNewLine      bool   `json:"IsNewLine,omitempty"`
+	HasChanged     bool   `json:"HasChanged,omitempty"`
+	DisplayIndex   int    `json:"DisplayIndex,omitempty"`
+	ChangeSequence int    `json:"ChangeSequence,omitempty"`
+	PreviousKey    string `json:"PreviousKey,omitempty"`
+	// Licenses       struct {
+	// } `json:"Licenses,omitempty"`
+	IsSelected bool `json:"IsSelected,omitempty"`
+}
+
+func (d JournalDetail) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(d)
+}
+
+type GLJournalBatchJournalHeaders []GLJournalBatchJournalHeader
+
+type GLJournalBatchJournalHeader struct {
+	BatchNumber                    string         `json:"BatchNumber,omitempty"`
+	EntryNumber                    string         `json:"EntryNumber,omitempty"`
+	Originator                     string         `json:"Originator,omitempty"`
+	SourceLedger                   string         `json:"SourceLedger,omitempty"`
+	SourceType                     string         `json:"SourceType,omitempty"`
+	FiscalYear                     string         `json:"FiscalYear,omitempty"`
+	FiscalPeriod                   string         `json:"FiscalPeriod,omitempty"`
+	AutoReversal                   string         `json:"AutoReversal,omitempty"`
+	Description                    string         `json:"Description,omitempty"`
+	Debits                         int            `json:"Debits,omitempty"`
+	Credits                        int            `json:"Credits,omitempty"`
+	Quantity                       int            `json:"Quantity,omitempty"`
+	PostingDate                    Time           `json:"PostingDate,omitempty"`
+	DrillDownType                  int            `json:"DrillDownType,omitempty"`
+	DrillDownLinkNumber            int            `json:"DrillDownLinkNumber,omitempty"`
+	DrillDownApplicationSource     string         `json:"DrillDownApplicationSource,omitempty"`
+	OutOfBalanceBy                 int            `json:"OutOfBalanceBy,omitempty"`
+	SpecificReversalYear           string         `json:"SpecificReversalYear,omitempty"`
+	SpecificReversalPeriod         string         `json:"SpecificReversalPeriod,omitempty"`
+	ErrorBatch                     int            `json:"ErrorBatch,omitempty"`
+	ErrorEntry                     int            `json:"ErrorEntry,omitempty"`
+	NumberOfDetails                int            `json:"NumberOfDetails,omitempty"`
+	Processswitches                string         `json:"Processswitches,omitempty"`
+	EnteredBy                      string         `json:"EnteredBy,omitempty"`
+	DocumentDate                   Time           `json:"DocumentDate,omitempty"`
+	OrigExists                     int            `json:"OrigExists,omitempty"`
+	OrigDescription                string         `json:"OrigDescription,omitempty"`
+	OrigStatus                     int            `json:"OrigStatus,omitempty"`
+	OrigMulticurrencySwitch        int            `json:"OrigMulticurrencySwitch,omitempty"`
+	OrigHomeCurrency               string         `json:"OrigHomeCurrency,omitempty"`
+	OrigHomeCurrencyDecimals       int            `json:"OrigHomeCurrencyDecimals,omitempty"`
+	OrigQtySwitch                  int            `json:"OrigQtySwitch,omitempty"`
+	OrigQtyDecimals                int            `json:"OrigQtyDecimals,omitempty"`
+	SourceCodeExists               int            `json:"SourceCodeExists,omitempty"`
+	SourceCodeDescription          string         `json:"SourceCodeDescription,omitempty"`
+	TaxGroup                       string         `json:"TaxGroup,omitempty"`
+	EntryType                      string         `json:"EntryType,omitempty"`
+	DoNotCalculationTax            string         `json:"DoNotCalculationTax,omitempty"`
+	CustomerVendorNumber           string         `json:"CustomerVendorNumber,omitempty"`
+	DocumentType                   string         `json:"DocumentType,omitempty"`
+	DocumentNumber                 string         `json:"DocumentNumber,omitempty"`
+	TaxAuthority1                  string         `json:"TaxAuthority1,omitempty"`
+	TaxAuthority2                  string         `json:"TaxAuthority2,omitempty"`
+	TaxAuthority3                  string         `json:"TaxAuthority3,omitempty"`
+	TaxAuthority4                  string         `json:"TaxAuthority4,omitempty"`
+	TaxAuthority5                  string         `json:"TaxAuthority5,omitempty"`
+	TaxVendorClass1                int            `json:"TaxVendorClass1,omitempty"`
+	TaxVendorClass2                int            `json:"TaxVendorClass2,omitempty"`
+	TaxVendorClass3                int            `json:"TaxVendorClass3,omitempty"`
+	TaxVendorClass4                int            `json:"TaxVendorClass4,omitempty"`
+	TaxVendorClass5                int            `json:"TaxVendorClass5,omitempty"`
+	TaxItemClass1                  int            `json:"TaxItemClass1,omitempty"`
+	TaxItemClass2                  int            `json:"TaxItemClass2,omitempty"`
+	TaxItemClass3                  int            `json:"TaxItemClass3,omitempty"`
+	TaxItemClass4                  int            `json:"TaxItemClass4,omitempty"`
+	TaxItemClass5                  int            `json:"TaxItemClass5,omitempty"`
+	TaxBaseAmount1                 int            `json:"TaxBaseAmount1,omitempty"`
+	TaxBaseAmount2                 int            `json:"TaxBaseAmount2,omitempty"`
+	TaxBaseAmount3                 int            `json:"TaxBaseAmount3,omitempty"`
+	TaxBaseAmount4                 int            `json:"TaxBaseAmount4,omitempty"`
+	TaxBaseAmount5                 int            `json:"TaxBaseAmount5,omitempty"`
+	TaxAmount1                     int            `json:"TaxAmount1,omitempty"`
+	TaxAmount2                     int            `json:"TaxAmount2,omitempty"`
+	TaxAmount3                     int            `json:"TaxAmount3,omitempty"`
+	TaxAmount4                     int            `json:"TaxAmount4,omitempty"`
+	TaxAmount5                     int            `json:"TaxAmount5,omitempty"`
+	TaxExpenseAmount1              int            `json:"TaxExpenseAmount1,omitempty"`
+	TaxExpenseAmount2              int            `json:"TaxExpenseAmount2,omitempty"`
+	TaxExpenseAmount3              int            `json:"TaxExpenseAmount3,omitempty"`
+	TaxExpenseAmount4              int            `json:"TaxExpenseAmount4,omitempty"`
+	TaxExpenseAmount5              int            `json:"TaxExpenseAmount5,omitempty"`
+	TaxRecoverableAmount1          int            `json:"TaxRecoverableAmount1,omitempty"`
+	TaxRecoverableAmount2          int            `json:"TaxRecoverableAmount2,omitempty"`
+	TaxRecoverableAmount3          int            `json:"TaxRecoverableAmount3,omitempty"`
+	TaxRecoverableAmount4          int            `json:"TaxRecoverableAmount4,omitempty"`
+	TaxRecoverableAmount5          int            `json:"TaxRecoverableAmount5,omitempty"`
+	TaxAllocatedAmount1            int            `json:"TaxAllocatedAmount1,omitempty"`
+	TaxAllocatedAmount2            int            `json:"TaxAllocatedAmount2,omitempty"`
+	TaxAllocatedAmount3            int            `json:"TaxAllocatedAmount3,omitempty"`
+	TaxAllocatedAmount4            int            `json:"TaxAllocatedAmount4,omitempty"`
+	TaxAllocatedAmount5            int            `json:"TaxAllocatedAmount5,omitempty"`
+	TaxReportingAmount1            int            `json:"TaxReportingAmount1,omitempty"`
+	TaxReportingAmount2            int            `json:"TaxReportingAmount2,omitempty"`
+	TaxReportingAmount3            int            `json:"TaxReportingAmount3,omitempty"`
+	TaxReportingAmount4            int            `json:"TaxReportingAmount4,omitempty"`
+	TaxReportingAmount5            int            `json:"TaxReportingAmount5,omitempty"`
+	TaxReportingExpensed1          int            `json:"TaxReportingExpensed1,omitempty"`
+	TaxReportingExpensed2          int            `json:"TaxReportingExpensed2,omitempty"`
+	TaxReportingExpensed3          int            `json:"TaxReportingExpensed3,omitempty"`
+	TaxReportingExpensed4          int            `json:"TaxReportingExpensed4,omitempty"`
+	TaxReportingExpensed5          int            `json:"TaxReportingExpensed5,omitempty"`
+	TaxReportingRecoverableAmount1 int            `json:"TaxReportingRecoverableAmount1,omitempty"`
+	TaxReportingRecoverableAmount2 int            `json:"TaxReportingRecoverableAmount2,omitempty"`
+	TaxReportingRecoverableAmount3 int            `json:"TaxReportingRecoverableAmount3,omitempty"`
+	TaxReportingRecoverableAmount4 int            `json:"TaxReportingRecoverableAmount4,omitempty"`
+	TaxReportingRecoverableAmount5 int            `json:"TaxReportingRecoverableAmount5,omitempty"`
+	TaxReportingAllocatedAmount1   int            `json:"TaxReportingAllocatedAmount1,omitempty"`
+	TaxReportingAllocatedAmount2   int            `json:"TaxReportingAllocatedAmount2,omitempty"`
+	TaxReportingAllocatedAmount3   int            `json:"TaxReportingAllocatedAmount3,omitempty"`
+	TaxReportingAllocatedAmount4   int            `json:"TaxReportingAllocatedAmount4,omitempty"`
+	TaxReportingAllocatedAmount5   int            `json:"TaxReportingAllocatedAmount5,omitempty"`
+	TaxReportingCurrencyCode       string         `json:"TaxReportingCurrencyCode,omitempty"`
+	TaxReportingRate               int            `json:"TaxReportingRate,omitempty"`
+	TaxReportingRateType           string         `json:"TaxReportingRateType,omitempty"`
+	TaxReportingRateDate           Time           `json:"TaxReportingRateDate,omitempty"`
+	TaxReportingRateOperation      string         `json:"TaxReportingRateOperation,omitempty"`
+	TaxExpenseAccount1             string         `json:"TaxExpenseAccount1,omitempty"`
+	TaxExpenseAccount2             string         `json:"TaxExpenseAccount2,omitempty"`
+	TaxExpenseAccount3             string         `json:"TaxExpenseAccount3,omitempty"`
+	TaxExpenseAccount4             string         `json:"TaxExpenseAccount4,omitempty"`
+	TaxExpenseAccount5             string         `json:"TaxExpenseAccount5,omitempty"`
+	TaxRecoverableAccount1         string         `json:"TaxRecoverableAccount1,omitempty"`
+	TaxRecoverableAccount2         string         `json:"TaxRecoverableAccount2,omitempty"`
+	TaxRecoverableAccount3         string         `json:"TaxRecoverableAccount3,omitempty"`
+	TaxRecoverableAccount4         string         `json:"TaxRecoverableAccount4,omitempty"`
+	TaxRecoverableAccount5         string         `json:"TaxRecoverableAccount5,omitempty"`
+	TaxRate1                       int            `json:"TaxRate1,omitempty"`
+	TaxRate2                       int            `json:"TaxRate2,omitempty"`
+	TaxRate3                       int            `json:"TaxRate3,omitempty"`
+	TaxRate4                       int            `json:"TaxRate4,omitempty"`
+	TaxRate5                       int            `json:"TaxRate5,omitempty"`
+	FunctionalTaxAmount1           int            `json:"FunctionalTaxAmount1,omitempty"`
+	FunctionalTaxAmount2           int            `json:"FunctionalTaxAmount2,omitempty"`
+	FunctionalTaxAmount3           int            `json:"FunctionalTaxAmount3,omitempty"`
+	FunctionalTaxAmount4           int            `json:"FunctionalTaxAmount4,omitempty"`
+	FunctionalTaxAmount5           int            `json:"FunctionalTaxAmount5,omitempty"`
+	FunctionalTaxBaseAmount1       int            `json:"FunctionalTaxBaseAmount1,omitempty"`
+	FunctionalTaxBaseAmount2       int            `json:"FunctionalTaxBaseAmount2,omitempty"`
+	FunctionalTaxBaseAmount3       int            `json:"FunctionalTaxBaseAmount3,omitempty"`
+	FunctionalTaxBaseAmount4       int            `json:"FunctionalTaxBaseAmount4,omitempty"`
+	FunctionalTaxBaseAmount5       int            `json:"FunctionalTaxBaseAmount5,omitempty"`
+	FunctionalExpensedAmount1      int            `json:"FunctionalExpensedAmount1,omitempty"`
+	FunctionalExpensedAmount2      int            `json:"FunctionalExpensedAmount2,omitempty"`
+	FunctionalExpensedAmount3      int            `json:"FunctionalExpensedAmount3,omitempty"`
+	FunctionalExpensedAmount4      int            `json:"FunctionalExpensedAmount4,omitempty"`
+	FunctionalExpensedAmount5      int            `json:"FunctionalExpensedAmount5,omitempty"`
+	FunctionalRecoverableAmount1   int            `json:"FunctionalRecoverableAmount1,omitempty"`
+	FunctionalRecoverableAmount2   int            `json:"FunctionalRecoverableAmount2,omitempty"`
+	FunctionalRecoverableAmount3   int            `json:"FunctionalRecoverableAmount3,omitempty"`
+	FunctionalRecoverableAmount4   int            `json:"FunctionalRecoverableAmount4,omitempty"`
+	FunctionalRecoverableAmount5   int            `json:"FunctionalRecoverableAmount5,omitempty"`
+	FunctionalAllocatedAmount1     int            `json:"FunctionalAllocatedAmount1,omitempty"`
+	FunctionalAllocatedAmount2     int            `json:"FunctionalAllocatedAmount2,omitempty"`
+	FunctionalAllocatedAmount3     int            `json:"FunctionalAllocatedAmount3,omitempty"`
+	FunctionalAllocatedAmount4     int            `json:"FunctionalAllocatedAmount4,omitempty"`
+	FunctionalAllocatedAmount5     int            `json:"FunctionalAllocatedAmount5,omitempty"`
+	InvoicetotalInTaxGroupCurre    int            `json:"InvoicetotalInTaxGroupCurre,omitempty"`
+	InvoicetotalInfunctionalCurr   int            `json:"InvoicetotalInfunctionalCurr,omitempty"`
+	TaxGroupDescription            string         `json:"TaxGroupDescription,omitempty"`
+	TaxAuthorityDescription1       string         `json:"TaxAuthorityDescription1,omitempty"`
+	TaxAuthorityDescription2       string         `json:"TaxAuthorityDescription2,omitempty"`
+	TaxAuthorityDescription3       string         `json:"TaxAuthorityDescription3,omitempty"`
+	TaxAuthorityDescription4       string         `json:"TaxAuthorityDescription4,omitempty"`
+	TaxAuthorityDescription5       string         `json:"TaxAuthorityDescription5,omitempty"`
+	TaxReportingCurrencyCodeDesc   string         `json:"TaxReportingCurrencyCodeDesc,omitempty"`
+	RateTypeDescription            string         `json:"RateTypeDescription,omitempty"`
+	CustomerVendorName             string         `json:"CustomerVendorName,omitempty"`
+	JournalDetails                 JournalDetails `json:"JournalDetails,omitempty"`
+	UpdateOperation                string         `json:"UpdateOperation,omitempty"`
+	Warnings                       []struct {
+		Message        string `json:"Message,omitempty"`
+		Priority       string `json:"Priority,omitempty"`
+		PriorityString string `json:"PriorityString,omitempty"`
+		Tag            struct {
+		} `json:"Tag,omitempty"`
+	} `json:"Warnings,omitempty"`
+	ETag           string `json:"ETag,omitempty"`
+	IsDeleted      bool   `json:"IsDeleted,omitempty"`
+	IsNewLine      bool   `json:"IsNewLine,omitempty"`
+	HasChanged     bool   `json:"HasChanged,omitempty"`
+	DisplayIndex   int    `json:"DisplayIndex,omitempty"`
+	ChangeSequence int    `json:"ChangeSequence,omitempty"`
+	PreviousKey    string `json:"PreviousKey,omitempty"`
+	// Licenses       struct {
+	// } `json:"Licenses,omitempty"`
+	IsSelected bool `json:"IsSelected,omitempty"`
+}
+
+func (h GLJournalBatchJournalHeader) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(h)
 }

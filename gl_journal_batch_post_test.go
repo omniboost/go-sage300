@@ -2,17 +2,17 @@ package sage300_test
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"testing"
 )
 
 func TestGLJournalBatchPost(t *testing.T) {
 	req := client.NewGLJournalBatchPostRequest()
-	resp, err := req.All()
+	resp, err := req.Do()
 	if err != nil {
 		t.Error(err)
 	}
 
 	b, _ := json.MarshalIndent(resp, "", "  ")
-	log.Println(string(b))
+	fmt.Println(string(b))
 }

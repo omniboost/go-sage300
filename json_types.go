@@ -7,6 +7,14 @@ import (
 	"github.com/pkg/errors"
 )
 
+type Time struct {
+	time.Time
+}
+
+func (t Time) IsEmpty() bool {
+	return t.Time.IsZero()
+}
+
 type Date struct {
 	time.Time
 }
