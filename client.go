@@ -298,13 +298,18 @@ func (c *Client) Do(req *http.Request, body interface{}) (*http.Response, error)
 	}
 
 	errResp := &ErrorResponse{Response: httpResp}
-	err = c.Unmarshal(httpResp.Body, body, errResp)
+	errResp2 := &ErrorResponse2{Response: httpResp}
+	err = c.Unmarshal(httpResp.Body, body, errResp, errResp2)
 	if err != nil {
 		return httpResp, err
 	}
 
 	if errResp.Error() != "" {
 		return httpResp, errResp
+	}
+
+	if errResp2.Error() != "" {
+		return httpResp, errResp2
 	}
 
 	return httpResp, nil
@@ -443,6 +448,27 @@ func (d *ErrorDetail) Error() string {
 		return fmt.Sprintf("%s: %s", d.ErrorCode, d.Detail)
 	}
 	return ""
+}
+
+type ErrorResponse2 struct {
+	// HTTP response that caused this error
+	Response *http.Response
+
+	Err struct {
+		Code    string `json:"code"`
+		Message struct {
+			Lang  string `json:"lang"`
+			Value string `json:"value"`
+		} `json:"message"`
+	} `json:"error"`
+}
+
+func (r *ErrorResponse2) Error() string {
+	if r.Err.Code == "" && r.Err.Message.Value == "" {
+		return ""
+	}
+
+	return fmt.Sprintf("%s: %s", r.Err.Code, r.Err.Message.Value)
 }
 
 func checkContentType(response *http.Response) error {
