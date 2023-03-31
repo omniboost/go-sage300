@@ -448,7 +448,7 @@ func (d *ErrorDetail) Error() string {
 func checkContentType(response *http.Response) error {
 	header := response.Header.Get("Content-Type")
 	contentType := strings.Split(header, ";")[0]
-	if contentType != "application/vnd.oracle.resource+json" {
+	if contentType != "application/vnd.oracle.resource+json" && contentType != "text/plain" {
 		return fmt.Errorf("Expected Content-Type \"%s\", got \"%s\"", mediaType, contentType)
 	}
 
