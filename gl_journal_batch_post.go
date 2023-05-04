@@ -105,11 +105,7 @@ func (r *GLJournalBatchPostRequest) NewResponseBody() *GLJournalBatchPostRespons
 	return &GLJournalBatchPostResponseBody{}
 }
 
-type GLJournalBatchPostResponseBody struct {
-	OdataContext  string     `json:"@odata.context"`
-	Value         GLAccounts `json:"value"`
-	OdataNextLink string     `json:"@odata.nextLink"`
-}
+type GLJournalBatchPostResponseBody GLJournalBatch
 
 func (r *GLJournalBatchPostRequest) URL() (*url.URL, error) {
 	u, err := r.client.GetEndpointURL("/v{{.api_version}}/{{.tenant_id}}/{{.company_id}}/GL/GLJournalBatches", r.PathParams())

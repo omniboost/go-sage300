@@ -258,6 +258,7 @@ func (d PostingJournalDetail) MarshalJSON() ([]byte, error) {
 }
 
 type GLJournalBatch struct {
+	OdataContext                     string                       `json:"@odata.context,omitempty"`
 	BatchNumber                      string                       `json:"BatchNumber,omitempty"`
 	ActiveSwitch                     string                       `json:"ActiveSwitch,omitempty"`
 	Description                      string                       `json:"Description,omitempty"`
@@ -267,9 +268,9 @@ type GLJournalBatch struct {
 	JournalBatchType                 string                       `json:"JournalBatchType,omitempty"`
 	Status                           string                       `json:"Status,omitempty"`
 	PostingSequence                  int                          `json:"PostingSequence,omitempty"`
-	Debits                           int                          `json:"Debits,omitempty"`
-	Credits                          int                          `json:"Credits,omitempty"`
-	QuantityTotal                    int                          `json:"QuantityTotal,omitempty"`
+	Debits                           float64                      `json:"Debits,omitempty"`
+	Credits                          float64                      `json:"Credits,omitempty"`
+	QuantityTotal                    float64                      `json:"QuantityTotal,omitempty"`
 	NumberOfEntries                  int                          `json:"NumberOfEntries,omitempty"`
 	NextEntryNumber                  int                          `json:"NextEntryNumber,omitempty"`
 	NumberOfErrors                   int                          `json:"NumberOfErrors,omitempty"`
@@ -307,15 +308,15 @@ type JournalDetail struct {
 	AccountNumber                string  `json:"AccountNumber,omitempty"`
 	CompanyID                    string  `json:"CompanyID,omitempty"`
 	Amount                       float64 `json:"Amount,omitempty"`
-	Quantity                     int     `json:"Quantity,omitempty"`
+	Quantity                     float64 `json:"Quantity,omitempty"`
 	SourceCurrencyDecimals       string  `json:"SourceCurrencyDecimals,omitempty"`
-	SourceCurrencyAmount         int     `json:"SourceCurrencyAmount,omitempty"`
+	SourceCurrencyAmount         float64 `json:"SourceCurrencyAmount,omitempty"`
 	HomeCurrency                 string  `json:"HomeCurrency,omitempty"`
 	CurrencyRateTable            string  `json:"CurrencyRateTable,omitempty"`
 	SourceCurrency               string  `json:"SourceCurrency,omitempty"`
 	CurrencyRateDate             Time    `json:"CurrencyRateDate,omitempty"`
 	CurrencyRate                 int     `json:"CurrencyRate,omitempty"`
-	CurrencyRateSpread           int     `json:"CurrencyRateSpread,omitempty"`
+	CurrencyRateSpread           float64 `json:"CurrencyRateSpread,omitempty"`
 	CurrencyRateDateMatching     string  `json:"CurrencyRateDateMatching,omitempty"`
 	CurrencyRateOperator         string  `json:"CurrencyRateOperator,omitempty"`
 	Description                  string  `json:"Description,omitempty"`
@@ -411,7 +412,8 @@ type JournalDetail struct {
 	PreviousKey    string `json:"PreviousKey,omitempty"`
 	// Licenses       struct {
 	// } `json:"Licenses,omitempty"`
-	IsSelected bool `json:"IsSelected,omitempty"`
+	IsSelected                  bool          `json:"IsSelected,omitempty"`
+	JournalDetailOptionalFields []interface{} `json:"JournalDetailOptionalFields,omitempty"`
 }
 
 func (d JournalDetail) MarshalJSON() ([]byte, error) {
@@ -430,14 +432,14 @@ type GLJournalBatchJournalHeader struct {
 	FiscalPeriod                   string         `json:"FiscalPeriod,omitempty"`
 	AutoReversal                   string         `json:"AutoReversal,omitempty"`
 	Description                    string         `json:"Description,omitempty"`
-	Debits                         int            `json:"Debits,omitempty"`
-	Credits                        int            `json:"Credits,omitempty"`
-	Quantity                       int            `json:"Quantity,omitempty"`
+	Debits                         float64        `json:"Debits,omitempty"`
+	Credits                        float64        `json:"Credits,omitempty"`
+	Quantity                       float64        `json:"Quantity,omitempty"`
 	PostingDate                    Time           `json:"PostingDate,omitempty"`
 	DrillDownType                  int            `json:"DrillDownType,omitempty"`
 	DrillDownLinkNumber            int            `json:"DrillDownLinkNumber,omitempty"`
 	DrillDownApplicationSource     string         `json:"DrillDownApplicationSource,omitempty"`
-	OutOfBalanceBy                 int            `json:"OutOfBalanceBy,omitempty"`
+	OutOfBalanceBy                 float64        `json:"OutOfBalanceBy,omitempty"`
 	SpecificReversalYear           string         `json:"SpecificReversalYear,omitempty"`
 	SpecificReversalPeriod         string         `json:"SpecificReversalPeriod,omitempty"`
 	ErrorBatch                     int            `json:"ErrorBatch,omitempty"`
@@ -477,53 +479,53 @@ type GLJournalBatchJournalHeader struct {
 	TaxItemClass3                  int            `json:"TaxItemClass3,omitempty"`
 	TaxItemClass4                  int            `json:"TaxItemClass4,omitempty"`
 	TaxItemClass5                  int            `json:"TaxItemClass5,omitempty"`
-	TaxBaseAmount1                 int            `json:"TaxBaseAmount1,omitempty"`
-	TaxBaseAmount2                 int            `json:"TaxBaseAmount2,omitempty"`
-	TaxBaseAmount3                 int            `json:"TaxBaseAmount3,omitempty"`
-	TaxBaseAmount4                 int            `json:"TaxBaseAmount4,omitempty"`
-	TaxBaseAmount5                 int            `json:"TaxBaseAmount5,omitempty"`
-	TaxAmount1                     int            `json:"TaxAmount1,omitempty"`
-	TaxAmount2                     int            `json:"TaxAmount2,omitempty"`
-	TaxAmount3                     int            `json:"TaxAmount3,omitempty"`
-	TaxAmount4                     int            `json:"TaxAmount4,omitempty"`
-	TaxAmount5                     int            `json:"TaxAmount5,omitempty"`
-	TaxExpenseAmount1              int            `json:"TaxExpenseAmount1,omitempty"`
-	TaxExpenseAmount2              int            `json:"TaxExpenseAmount2,omitempty"`
-	TaxExpenseAmount3              int            `json:"TaxExpenseAmount3,omitempty"`
-	TaxExpenseAmount4              int            `json:"TaxExpenseAmount4,omitempty"`
-	TaxExpenseAmount5              int            `json:"TaxExpenseAmount5,omitempty"`
-	TaxRecoverableAmount1          int            `json:"TaxRecoverableAmount1,omitempty"`
-	TaxRecoverableAmount2          int            `json:"TaxRecoverableAmount2,omitempty"`
-	TaxRecoverableAmount3          int            `json:"TaxRecoverableAmount3,omitempty"`
-	TaxRecoverableAmount4          int            `json:"TaxRecoverableAmount4,omitempty"`
-	TaxRecoverableAmount5          int            `json:"TaxRecoverableAmount5,omitempty"`
-	TaxAllocatedAmount1            int            `json:"TaxAllocatedAmount1,omitempty"`
-	TaxAllocatedAmount2            int            `json:"TaxAllocatedAmount2,omitempty"`
-	TaxAllocatedAmount3            int            `json:"TaxAllocatedAmount3,omitempty"`
-	TaxAllocatedAmount4            int            `json:"TaxAllocatedAmount4,omitempty"`
-	TaxAllocatedAmount5            int            `json:"TaxAllocatedAmount5,omitempty"`
-	TaxReportingAmount1            int            `json:"TaxReportingAmount1,omitempty"`
-	TaxReportingAmount2            int            `json:"TaxReportingAmount2,omitempty"`
-	TaxReportingAmount3            int            `json:"TaxReportingAmount3,omitempty"`
-	TaxReportingAmount4            int            `json:"TaxReportingAmount4,omitempty"`
-	TaxReportingAmount5            int            `json:"TaxReportingAmount5,omitempty"`
-	TaxReportingExpensed1          int            `json:"TaxReportingExpensed1,omitempty"`
-	TaxReportingExpensed2          int            `json:"TaxReportingExpensed2,omitempty"`
-	TaxReportingExpensed3          int            `json:"TaxReportingExpensed3,omitempty"`
-	TaxReportingExpensed4          int            `json:"TaxReportingExpensed4,omitempty"`
-	TaxReportingExpensed5          int            `json:"TaxReportingExpensed5,omitempty"`
-	TaxReportingRecoverableAmount1 int            `json:"TaxReportingRecoverableAmount1,omitempty"`
-	TaxReportingRecoverableAmount2 int            `json:"TaxReportingRecoverableAmount2,omitempty"`
-	TaxReportingRecoverableAmount3 int            `json:"TaxReportingRecoverableAmount3,omitempty"`
-	TaxReportingRecoverableAmount4 int            `json:"TaxReportingRecoverableAmount4,omitempty"`
-	TaxReportingRecoverableAmount5 int            `json:"TaxReportingRecoverableAmount5,omitempty"`
-	TaxReportingAllocatedAmount1   int            `json:"TaxReportingAllocatedAmount1,omitempty"`
-	TaxReportingAllocatedAmount2   int            `json:"TaxReportingAllocatedAmount2,omitempty"`
-	TaxReportingAllocatedAmount3   int            `json:"TaxReportingAllocatedAmount3,omitempty"`
-	TaxReportingAllocatedAmount4   int            `json:"TaxReportingAllocatedAmount4,omitempty"`
-	TaxReportingAllocatedAmount5   int            `json:"TaxReportingAllocatedAmount5,omitempty"`
+	TaxBaseAmount1                 float64        `json:"TaxBaseAmount1,omitempty"`
+	TaxBaseAmount2                 float64        `json:"TaxBaseAmount2,omitempty"`
+	TaxBaseAmount3                 float64        `json:"TaxBaseAmount3,omitempty"`
+	TaxBaseAmount4                 float64        `json:"TaxBaseAmount4,omitempty"`
+	TaxBaseAmount5                 float64        `json:"TaxBaseAmount5,omitempty"`
+	TaxAmount1                     float64        `json:"TaxAmount1,omitempty"`
+	TaxAmount2                     float64        `json:"TaxAmount2,omitempty"`
+	TaxAmount3                     float64        `json:"TaxAmount3,omitempty"`
+	TaxAmount4                     float64        `json:"TaxAmount4,omitempty"`
+	TaxAmount5                     float64        `json:"TaxAmount5,omitempty"`
+	TaxExpenseAmount1              float64        `json:"TaxExpenseAmount1,omitempty"`
+	TaxExpenseAmount2              float64        `json:"TaxExpenseAmount2,omitempty"`
+	TaxExpenseAmount3              float64        `json:"TaxExpenseAmount3,omitempty"`
+	TaxExpenseAmount4              float64        `json:"TaxExpenseAmount4,omitempty"`
+	TaxExpenseAmount5              float64        `json:"TaxExpenseAmount5,omitempty"`
+	TaxRecoverableAmount1          float64        `json:"TaxRecoverableAmount1,omitempty"`
+	TaxRecoverableAmount2          float64        `json:"TaxRecoverableAmount2,omitempty"`
+	TaxRecoverableAmount3          float64        `json:"TaxRecoverableAmount3,omitempty"`
+	TaxRecoverableAmount4          float64        `json:"TaxRecoverableAmount4,omitempty"`
+	TaxRecoverableAmount5          float64        `json:"TaxRecoverableAmount5,omitempty"`
+	TaxAllocatedAmount1            float64        `json:"TaxAllocatedAmount1,omitempty"`
+	TaxAllocatedAmount2            float64        `json:"TaxAllocatedAmount2,omitempty"`
+	TaxAllocatedAmount3            float64        `json:"TaxAllocatedAmount3,omitempty"`
+	TaxAllocatedAmount4            float64        `json:"TaxAllocatedAmount4,omitempty"`
+	TaxAllocatedAmount5            float64        `json:"TaxAllocatedAmount5,omitempty"`
+	TaxReportingAmount1            float64        `json:"TaxReportingAmount1,omitempty"`
+	TaxReportingAmount2            float64        `json:"TaxReportingAmount2,omitempty"`
+	TaxReportingAmount3            float64        `json:"TaxReportingAmount3,omitempty"`
+	TaxReportingAmount4            float64        `json:"TaxReportingAmount4,omitempty"`
+	TaxReportingAmount5            float64        `json:"TaxReportingAmount5,omitempty"`
+	TaxReportingExpensed1          float64        `json:"TaxReportingExpensed1,omitempty"`
+	TaxReportingExpensed2          float64        `json:"TaxReportingExpensed2,omitempty"`
+	TaxReportingExpensed3          float64        `json:"TaxReportingExpensed3,omitempty"`
+	TaxReportingExpensed4          float64        `json:"TaxReportingExpensed4,omitempty"`
+	TaxReportingExpensed5          float64        `json:"TaxReportingExpensed5,omitempty"`
+	TaxReportingRecoverableAmount1 float64        `json:"TaxReportingRecoverableAmount1,omitempty"`
+	TaxReportingRecoverableAmount2 float64        `json:"TaxReportingRecoverableAmount2,omitempty"`
+	TaxReportingRecoverableAmount3 float64        `json:"TaxReportingRecoverableAmount3,omitempty"`
+	TaxReportingRecoverableAmount4 float64        `json:"TaxReportingRecoverableAmount4,omitempty"`
+	TaxReportingRecoverableAmount5 float64        `json:"TaxReportingRecoverableAmount5,omitempty"`
+	TaxReportingAllocatedAmount1   float64        `json:"TaxReportingAllocatedAmount1,omitempty"`
+	TaxReportingAllocatedAmount2   float64        `json:"TaxReportingAllocatedAmount2,omitempty"`
+	TaxReportingAllocatedAmount3   float64        `json:"TaxReportingAllocatedAmount3,omitempty"`
+	TaxReportingAllocatedAmount4   float64        `json:"TaxReportingAllocatedAmount4,omitempty"`
+	TaxReportingAllocatedAmount5   float64        `json:"TaxReportingAllocatedAmount5,omitempty"`
 	TaxReportingCurrencyCode       string         `json:"TaxReportingCurrencyCode,omitempty"`
-	TaxReportingRate               int            `json:"TaxReportingRate,omitempty"`
+	TaxReportingRate               float64        `json:"TaxReportingRate,omitempty"`
 	TaxReportingRateType           string         `json:"TaxReportingRateType,omitempty"`
 	TaxReportingRateDate           Time           `json:"TaxReportingRateDate,omitempty"`
 	TaxReportingRateOperation      string         `json:"TaxReportingRateOperation,omitempty"`
@@ -537,38 +539,38 @@ type GLJournalBatchJournalHeader struct {
 	TaxRecoverableAccount3         string         `json:"TaxRecoverableAccount3,omitempty"`
 	TaxRecoverableAccount4         string         `json:"TaxRecoverableAccount4,omitempty"`
 	TaxRecoverableAccount5         string         `json:"TaxRecoverableAccount5,omitempty"`
-	TaxRate1                       int            `json:"TaxRate1,omitempty"`
-	TaxRate2                       int            `json:"TaxRate2,omitempty"`
-	TaxRate3                       int            `json:"TaxRate3,omitempty"`
-	TaxRate4                       int            `json:"TaxRate4,omitempty"`
-	TaxRate5                       int            `json:"TaxRate5,omitempty"`
-	FunctionalTaxAmount1           int            `json:"FunctionalTaxAmount1,omitempty"`
-	FunctionalTaxAmount2           int            `json:"FunctionalTaxAmount2,omitempty"`
-	FunctionalTaxAmount3           int            `json:"FunctionalTaxAmount3,omitempty"`
-	FunctionalTaxAmount4           int            `json:"FunctionalTaxAmount4,omitempty"`
-	FunctionalTaxAmount5           int            `json:"FunctionalTaxAmount5,omitempty"`
-	FunctionalTaxBaseAmount1       int            `json:"FunctionalTaxBaseAmount1,omitempty"`
-	FunctionalTaxBaseAmount2       int            `json:"FunctionalTaxBaseAmount2,omitempty"`
-	FunctionalTaxBaseAmount3       int            `json:"FunctionalTaxBaseAmount3,omitempty"`
-	FunctionalTaxBaseAmount4       int            `json:"FunctionalTaxBaseAmount4,omitempty"`
-	FunctionalTaxBaseAmount5       int            `json:"FunctionalTaxBaseAmount5,omitempty"`
-	FunctionalExpensedAmount1      int            `json:"FunctionalExpensedAmount1,omitempty"`
-	FunctionalExpensedAmount2      int            `json:"FunctionalExpensedAmount2,omitempty"`
-	FunctionalExpensedAmount3      int            `json:"FunctionalExpensedAmount3,omitempty"`
-	FunctionalExpensedAmount4      int            `json:"FunctionalExpensedAmount4,omitempty"`
-	FunctionalExpensedAmount5      int            `json:"FunctionalExpensedAmount5,omitempty"`
-	FunctionalRecoverableAmount1   int            `json:"FunctionalRecoverableAmount1,omitempty"`
-	FunctionalRecoverableAmount2   int            `json:"FunctionalRecoverableAmount2,omitempty"`
-	FunctionalRecoverableAmount3   int            `json:"FunctionalRecoverableAmount3,omitempty"`
-	FunctionalRecoverableAmount4   int            `json:"FunctionalRecoverableAmount4,omitempty"`
-	FunctionalRecoverableAmount5   int            `json:"FunctionalRecoverableAmount5,omitempty"`
-	FunctionalAllocatedAmount1     int            `json:"FunctionalAllocatedAmount1,omitempty"`
-	FunctionalAllocatedAmount2     int            `json:"FunctionalAllocatedAmount2,omitempty"`
-	FunctionalAllocatedAmount3     int            `json:"FunctionalAllocatedAmount3,omitempty"`
-	FunctionalAllocatedAmount4     int            `json:"FunctionalAllocatedAmount4,omitempty"`
-	FunctionalAllocatedAmount5     int            `json:"FunctionalAllocatedAmount5,omitempty"`
-	InvoicetotalInTaxGroupCurre    int            `json:"InvoicetotalInTaxGroupCurre,omitempty"`
-	InvoicetotalInfunctionalCurr   int            `json:"InvoicetotalInfunctionalCurr,omitempty"`
+	TaxRate1                       float64        `json:"TaxRate1,omitempty"`
+	TaxRate2                       float64        `json:"TaxRate2,omitempty"`
+	TaxRate3                       float64        `json:"TaxRate3,omitempty"`
+	TaxRate4                       float64        `json:"TaxRate4,omitempty"`
+	TaxRate5                       float64        `json:"TaxRate5,omitempty"`
+	FunctionalTaxAmount1           float64        `json:"FunctionalTaxAmount1,omitempty"`
+	FunctionalTaxAmount2           float64        `json:"FunctionalTaxAmount2,omitempty"`
+	FunctionalTaxAmount3           float64        `json:"FunctionalTaxAmount3,omitempty"`
+	FunctionalTaxAmount4           float64        `json:"FunctionalTaxAmount4,omitempty"`
+	FunctionalTaxAmount5           float64        `json:"FunctionalTaxAmount5,omitempty"`
+	FunctionalTaxBaseAmount1       float64        `json:"FunctionalTaxBaseAmount1,omitempty"`
+	FunctionalTaxBaseAmount2       float64        `json:"FunctionalTaxBaseAmount2,omitempty"`
+	FunctionalTaxBaseAmount3       float64        `json:"FunctionalTaxBaseAmount3,omitempty"`
+	FunctionalTaxBaseAmount4       float64        `json:"FunctionalTaxBaseAmount4,omitempty"`
+	FunctionalTaxBaseAmount5       float64        `json:"FunctionalTaxBaseAmount5,omitempty"`
+	FunctionalExpensedAmount1      float64        `json:"FunctionalExpensedAmount1,omitempty"`
+	FunctionalExpensedAmount2      float64        `json:"FunctionalExpensedAmount2,omitempty"`
+	FunctionalExpensedAmount3      float64        `json:"FunctionalExpensedAmount3,omitempty"`
+	FunctionalExpensedAmount4      float64        `json:"FunctionalExpensedAmount4,omitempty"`
+	FunctionalExpensedAmount5      float64        `json:"FunctionalExpensedAmount5,omitempty"`
+	FunctionalRecoverableAmount1   float64        `json:"FunctionalRecoverableAmount1,omitempty"`
+	FunctionalRecoverableAmount2   float64        `json:"FunctionalRecoverableAmount2,omitempty"`
+	FunctionalRecoverableAmount3   float64        `json:"FunctionalRecoverableAmount3,omitempty"`
+	FunctionalRecoverableAmount4   float64        `json:"FunctionalRecoverableAmount4,omitempty"`
+	FunctionalRecoverableAmount5   float64        `json:"FunctionalRecoverableAmount5,omitempty"`
+	FunctionalAllocatedAmount1     float64        `json:"FunctionalAllocatedAmount1,omitempty"`
+	FunctionalAllocatedAmount2     float64        `json:"FunctionalAllocatedAmount2,omitempty"`
+	FunctionalAllocatedAmount3     float64        `json:"FunctionalAllocatedAmount3,omitempty"`
+	FunctionalAllocatedAmount4     float64        `json:"FunctionalAllocatedAmount4,omitempty"`
+	FunctionalAllocatedAmount5     float64        `json:"FunctionalAllocatedAmount5,omitempty"`
+	InvoicetotalInTaxGroupCurre    float64        `json:"InvoicetotalInTaxGroupCurre,omitempty"`
+	InvoicetotalInfunctionalCurr   float64        `json:"InvoicetotalInfunctionalCurr,omitempty"`
 	TaxGroupDescription            string         `json:"TaxGroupDescription,omitempty"`
 	TaxAuthorityDescription1       string         `json:"TaxAuthorityDescription1,omitempty"`
 	TaxAuthorityDescription2       string         `json:"TaxAuthorityDescription2,omitempty"`
